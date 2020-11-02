@@ -4,7 +4,7 @@
 
 <script>
 export default {
-name: "3dModelRenderer"
+name: "ModelRenderer"
 }
 </script>
 
