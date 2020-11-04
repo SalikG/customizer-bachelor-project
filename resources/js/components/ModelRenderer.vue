@@ -1,5 +1,5 @@
 <template>
-    <div class="w-100 h-100" id="canvasContainer">
+    <div id="canvasContainer">
 
     </div>
 </template>
@@ -31,7 +31,7 @@
 
     function init(){
         maxWidth = document.getElementById('canvasContainer').clientWidth;
-        maxHeight = document.getElementById('canvasContainer').clientHeight;
+        maxHeight = maxWidth - 100;
 
         renderer = new THREE.WebGLRenderer();
         scene = new THREE.Scene();
@@ -163,7 +163,7 @@
 
     window.addEventListener('resize', () => {
         maxWidth = document.getElementById('canvasContainer').clientWidth;
-        maxHeight = document.getElementById('canvasContainer').clientHeight;
+        maxHeight = maxWidth - 100;
         renderer.setSize(maxWidth, maxHeight);
         camera.aspect = maxWidth / maxHeight;
         camera.updateProjectionMatrix();

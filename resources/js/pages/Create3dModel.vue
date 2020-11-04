@@ -1,6 +1,6 @@
 <template>
-    <div class="row h-100">
-        <div id="leftPanel" class="col-sm-5 col-md-5 col-lg-5 col-xl-5 h-100">
+    <div class="row">
+        <div id="leftPanel" class="col-sm-5 col-md-5 col-lg-5 col-xl-5">
             <div class="input-group mb-3">
                 <div class="custom-file">
                     <input type="file" id="fileInput" ref="file" v-on:change="handleFileUpload()" class="custom-file-input"/>
@@ -11,7 +11,7 @@
                 </div>
             </div>
         </div>
-        <div id="rightPanel" class="col-sm-7 col-md-7 col-lg-7 col-xl-7 h-100">
+        <div id="rightPanel" class="col-sm-7 col-md-7 col-lg-7 col-xl-7">
             <ModelRenderer v-bind:model-path="currentFilePath"></ModelRenderer>
         </div>
     </div>
