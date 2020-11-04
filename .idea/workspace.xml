@@ -20,12 +20,28 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="a09fb66f-83a5-4a8c-bdc6-99822e720ecb" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/public/uploads/temp/8290dd29-bd46-4ce1-bd25-81806b1f644c.obj" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/uploads/temp/98b4a5c4-c1ca-416f-9033-d829d02d2210.obj" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/sass/_variables.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/sass/app.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/customizer.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/customizer.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/php.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/php.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/composer.json" beforeDir="false" afterPath="$PROJECT_DIR$/composer.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/composer.lock" beforeDir="false" afterPath="$PROJECT_DIR$/composer.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/css/app.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/css/app.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/public/js/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/app.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/assets/js/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/resources/assets/js/app.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/assets/js/components/ModelRenderer.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/assets/js/components/ModelRenderer.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/assets/js/pages/Create3dModel.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/assets/js/pages/Create3dModel.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/web.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/assets/css/app.css" beforeDir="false" afterPath="$PROJECT_DIR$/resources/sass/_globals.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/assets/js/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/app.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/assets/js/bootstrap.js" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/bootstrap.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/assets/js/components/ModelRenderer.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/ModelRenderer.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/assets/js/components/Test.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/Test.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/assets/js/pages/Create3dModel.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/pages/Create3dModel.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/assets/js/pages/Index.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/pages/Index.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/app.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/app.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/webpack.mix.js" beforeDir="false" afterPath="$PROJECT_DIR$/webpack.mix.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -35,6 +51,13 @@
   <component name="ComposerSettings" doNotAsk="true" synchronizationState="SYNCHRONIZE">
     <pharConfigPath>$PROJECT_DIR$/composer.json</pharConfigPath>
     <execution />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="SCSS File" />
+      </list>
+    </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -146,6 +169,7 @@
       <path value="$PROJECT_DIR$/vendor/laravel/framework" />
       <path value="$PROJECT_DIR$/vendor/monolog/monolog" />
       <path value="$PROJECT_DIR$/vendor/mockery/mockery" />
+      <path value="$PROJECT_DIR$/vendor/laravel/ui" />
     </include_path>
   </component>
   <component name="ProjectId" id="1jmA4R75fisX8nrph1M6HNQDhY6" />
@@ -157,6 +181,7 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/artisan" />
+    <property name="list.type.of.created.stylesheet" value="SCSS" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
@@ -168,7 +193,12 @@
     <property name="ts.external.directory.path" value="C:\Program Files\JetBrains\PhpStorm 2020.2\plugins\JavaScriptLanguage\jsLanguageServicesImpl\external" />
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
-  <component name="RunManager" selected="PHP Script.SERVE">
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\salik\Documents\Laravel Projects\customizer\resources" />
+    </key>
+  </component>
+  <component name="RunManager" selected="npm.watch">
     <configuration name="phpunit.xml" type="PHPUnitRunConfigurationType" factoryName="PHPUnit">
       <TestRunner scope="XML" />
       <method v="2" />
@@ -217,7 +247,7 @@
       <updated>1604398702091</updated>
       <workItem from="1604398703177" duration="13828000" />
       <workItem from="1604417570031" duration="3341000" />
-      <workItem from="1604494520533" duration="12323000" />
+      <workItem from="1604494520533" duration="18957000" />
     </task>
     <servers />
   </component>
@@ -249,22 +279,22 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="548" y="186" key="FileChooserDialogImpl/0.0.1536.824@0.0.1536.824" timestamp="1604398776379" />
-    <state width="1493" height="203" key="GridCell.Tab.0.bottom" timestamp="1604501530525">
+    <state width="1493" height="203" key="GridCell.Tab.0.bottom" timestamp="1604510283087">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="203" key="GridCell.Tab.0.bottom/0.0.1536.824@0.0.1536.824" timestamp="1604501530525" />
-    <state width="1493" height="203" key="GridCell.Tab.0.center" timestamp="1604501530524">
+    <state width="1493" height="203" key="GridCell.Tab.0.bottom/0.0.1536.824@0.0.1536.824" timestamp="1604510283087" />
+    <state width="1493" height="203" key="GridCell.Tab.0.center" timestamp="1604510283087">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="203" key="GridCell.Tab.0.center/0.0.1536.824@0.0.1536.824" timestamp="1604501530524" />
-    <state width="1493" height="203" key="GridCell.Tab.0.left" timestamp="1604501530524">
+    <state width="1493" height="203" key="GridCell.Tab.0.center/0.0.1536.824@0.0.1536.824" timestamp="1604510283087" />
+    <state width="1493" height="203" key="GridCell.Tab.0.left" timestamp="1604510283087">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="203" key="GridCell.Tab.0.left/0.0.1536.824@0.0.1536.824" timestamp="1604501530524" />
-    <state width="1493" height="203" key="GridCell.Tab.0.right" timestamp="1604501530524">
+    <state width="1493" height="203" key="GridCell.Tab.0.left/0.0.1536.824@0.0.1536.824" timestamp="1604510283087" />
+    <state width="1493" height="203" key="GridCell.Tab.0.right" timestamp="1604510283087">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="203" key="GridCell.Tab.0.right/0.0.1536.824@0.0.1536.824" timestamp="1604501530524" />
+    <state width="1493" height="203" key="GridCell.Tab.0.right/0.0.1536.824@0.0.1536.824" timestamp="1604510283087" />
     <state x="604" y="332" key="NewPhpFileDialog" timestamp="1604418686447">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
@@ -273,9 +303,9 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="537" y="31" key="RollbackChangesDialog/0.0.1536.824@0.0.1536.824" timestamp="1604417633530" />
-    <state x="431" y="145" width="672" height="678" key="search.everywhere.popup" timestamp="1604496008428">
+    <state x="431" y="145" width="672" height="678" key="search.everywhere.popup" timestamp="1604513511106">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="431" y="145" width="672" height="678" key="search.everywhere.popup/0.0.1536.824@0.0.1536.824" timestamp="1604496008428" />
+    <state x="431" y="145" width="672" height="678" key="search.everywhere.popup/0.0.1536.824@0.0.1536.824" timestamp="1604513511106" />
   </component>
 </project>

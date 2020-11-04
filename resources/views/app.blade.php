@@ -15,7 +15,7 @@
 
 </head>
 <body>
-<div id="app">
+<div id="app" class="container h-100">
     <h1>Hello App!</h1>
     <p>
         <!-- use router-link component for navigation. -->
