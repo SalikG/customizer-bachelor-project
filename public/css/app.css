@@ -1,5 +1,9 @@
 @import url(https://fonts.googleapis.com/css?family=Nunito);@charset "UTF-8";
 
+button:focus {
+  outline: none !important;
+}
+
 body,
 html {
   height: 100%;

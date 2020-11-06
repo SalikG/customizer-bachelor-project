@@ -20,12 +20,19 @@
                          v-bind:style="{width: uploadProgress + '%'}">{{uploadProgress}} %</div>
                 </div>
             </div>
-            <div id="infoContainer">
-
+            <div id="infoContainer" class="collapsible" v-bind:class="infoContainerClass">
+                <div class="form-group">
+                    <label for="fileName">Name:</label>
+                    <input class="form-control" id="fileName" type="text" v-bind:value="fileName">
+                    <small id="fileNameHelp" class="form-text text-muted">This name will also be shown in your Customizer</small>
+                </div>
+                <div id="materialList" class="list-group">
+                    <button v-for="material in materialNames" v-bind:id="material" class="list-group-item list-group-item-action" v-on:click="highlightSelectedMaterial($event)">{{material}}</button>
+                </div>
             </div>
         </div>
         <div id="rightPanel" class="col-sm-7 col-md-7 col-lg-7 col-xl-7">
-            <ModelRenderer v-bind:model-path="currentFilePath"></ModelRenderer>
+            <ModelRenderer ref="modelRenderer" v-on:rendered-new-3d-model="renderedNew3dModel" v-bind:model-path="currentFilePath"></ModelRenderer>
         </div>
     </div>
 </template>
@@ -45,11 +52,53 @@ export default {
                 isUploading3dModel: false,
                 uploadProgress: 0,
                 uploadProgressClass: 'collapsed',
+                infoContainerClass: 'd-none',
+                model3d: Object,
+                materialNames: [],
             }
         },
         methods: {
+            highlightSelectedMaterial(event){
+                this.$refs.modelRenderer.highlightSelectedMaterial(event.currentTarget.id);
+                let selectedMaterial = document.querySelector('.active')
+                if (selectedMaterial){
+                    selectedMaterial.classList.remove('active');
+                }
+                event.currentTarget.classList.add('active');
+            },
+
+            renderedNew3dModel(object){
+                const self = this;
+                self.model3d = object;
+                object.traverse( function ( node ) {
+                    if ( node.isMesh ){
+                        if (Array.isArray(node.material)){
+                            for (const [key, material] of Object.entries(node.material)) {
+                                self.addToMaterialIds(material.name)
+                            }
+                        }
+                        else {
+                            self.addToMaterialIds(node.material.name)
+                        }
+                    }
+                });
+                self.infoContainerExpand();
+            },
+
+            addToMaterialIds(value){
+                if(this.materialNames.indexOf(value) === -1){
+                    this.materialNames.push(value);
+                }
+            },
+
+            resetInfoContainer(){
+                const self = this;
+                self.materialNames = [];
+            },
+
             async loadFile(){
                 const self = this;
+                self.resetInfoContainer()
                 self.uploadProgress = 0;
                 self.loadingProgressExpand();
                 let formData = new FormData();
@@ -77,8 +126,9 @@ export default {
             },
 
             handleFileUpload(){
+                this.infoContainerCollapse();
                 this.file = this.$refs.file.files[0]
-                this.fileName = this.$refs.file.files[0].name
+                this.fileName = this.$refs.file.files[0].name.replace(/\.[^/.]+$/, "")
             },
 
             loadingProgressCollapse(){
@@ -86,7 +136,15 @@ export default {
             },
 
             loadingProgressExpand(){
-                this.uploadProgressClass = 'expanded';
+                this.uploadProgressClass = 'expandedProgressBar';
+            },
+
+            infoContainerCollapse(){
+                this.infoContainerClass = 'd-none'
+            },
+
+            infoContainerExpand(){
+                this.infoContainerClass = 'd-block'
             }
         }
     }
@@ -98,14 +156,16 @@ export default {
     .collapsed{
         max-height: 0;
     }
+
     .collapsible{
         position: relative;
         overflow: hidden;
         height: auto;
-        transition: max-height 2s ease-in-out;
+        transition: max-height 2s ease-out;
     }
 
-    .expanded{
+    .expandedProgressBar{
         max-height: 200px;
     }
+
 </style>

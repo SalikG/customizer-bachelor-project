@@ -19,14 +19,16 @@
                 loading3dModelProgress: 0,
                 activeClass: 'activeLoading',
                 noneActiveClass: 'd-none',
-                camera,
-                scene,
-                renderer,
-                controls,
-                modelObject,
-                orbitControls,
-                maxWidth,
-                maxHeight,
+                camera: Object,
+                scene: Object,
+                renderer: Object,
+                controls: Object,
+                modelObject: Object,
+                orbitControls: Object,
+                maxWidth: 0,
+                maxHeight: 0,
+                baseColor: new THREE.Color(0x333333),
+                highlightColor: new THREE.Color(0x0077ff),
             }
         },
         mounted: function (){
@@ -61,7 +63,7 @@
                 self.cleanResetScene();
 
                 const loader = new OBJLoader();
-                self.modelObject = loader.load(
+                loader.load(
                     // resource URL
                     filePath,
                     // called when resource is loaded
@@ -76,18 +78,18 @@
                             if ( node.isMesh ){
                                 if (Array.isArray(node.material)) {
                                     for (const [key, material] of Object.entries(node.material)) {
-                                        const color = new THREE.Color(0x555555);
-                                        material.color.set(color);
+                                        material.color.set(self.baseColor);
                                     }
                                 }
                                 else {
-                                    const color = new THREE.Color(0x555555);
-                                    node.material.color.set(color);
+                                    node.material.color.set(self.baseColor);
                                 }
                             }
                         });
                         self.scene.add( object );
                         self.setLighting(object);
+                        self.$emit('rendered-new-3d-model', object);
+                        self.modelObject = object;
                     },
                     // called when loading is in progresses
             function ( xhr ) {
@@ -157,11 +159,42 @@
                 this.controls.update();
                 this.renderer.render(this.scene, this.camera);
             },
+
+            highlightSelectedMaterial(materialName){
+                const self = this;
+                self.modelObject.traverse( function ( node ) {
+                    if ( node.isMesh ){
+                        if (Array.isArray(node.material)) {
+                            for (const [key, material] of Object.entries(node.material)) {
+                                if (material.name === materialName){
+                                    material.color.set(self.highlightColor);
+                                    material.opacity = 1;
+                                    material.transparent = false;
+                                }
+                                else{
+                                    material.color.set(self.baseColor);
+                                    material.opacity = 0.5;
+                                    material.transparent = true;
+                                }
+                            }
+                        }
+                        else {
+                            if (node.material.name === materialName) {
+                                node.material.color.set(self.highlightColor);
+                                node.material.opacity = 1;
+                                node.material.transparent = false;
+                            }
+                            else {
+                                node.material.color.set(self.baseColor);
+                                node.material.opacity = 0.5;
+                                node.material.transparent = true;
+                            }
+                        }
+                    }
+                });
+            }
         }
     }
-
-    let camera, scene, renderer, controls, modelObject, orbitControls, maxWidth, maxHeight;
-
 
 </script>
 

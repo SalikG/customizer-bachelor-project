@@ -24,14 +24,15 @@ class FileUploadController extends Controller
         $file = $request->file('file');
         $originalExtension = $file->getClientOriginalExtension();
 
-
         //Move Uploaded File
         $destinationPath = 'uploads\temp';
         $uuid = Str::uuid();
         $savedFile = $file->move($destinationPath, (string)$uuid.".".$file->getClientOriginalExtension());
-//        dd($savedFile);
         $result['uploadedPath'] = $savedFile->getPathname();
         return $result;
+    }
+
+    public function uploadSingeFile(Request $request){
     }
 
     private function validate3dFile(Request $request){
