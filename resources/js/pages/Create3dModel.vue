@@ -111,7 +111,7 @@ export default {
                         self.uploadProgress = Math.round((progressEvent.loaded * 100) / progressEvent.total);
                     }
                 };
-                let response = await axios.post( 'file-upload/temporary-single-file',
+                let response = await axios.post( 'file-upload/temporary-3d-model-single-file',
                     formData, config,
                 ).then(function(data){
                     if (data['status'] === 200){

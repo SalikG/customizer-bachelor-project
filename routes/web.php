@@ -20,4 +20,4 @@ Route::get('/', function () {
 
 
 // FILEHANDLING
-Route::post('/file-upload/temporary-single-file', [FileUploadController::class, 'temporarySingeFile']);
+Route::post('/file-upload/temporary-3d-model-single-file', [FileUploadController::class, 'temporary3dModelSingeFile']);

@@ -11,7 +11,7 @@ class FileUploadController extends Controller
         'obj',
     ];
 
-    public function temporarySingeFile(Request $request){
+    public function temporary3dModelSingeFile(Request $request){
         $result = [
             'status'=> 200,
             'message'=> 'OK',
@@ -30,9 +30,6 @@ class FileUploadController extends Controller
         $savedFile = $file->move($destinationPath, (string)$uuid.".".$file->getClientOriginalExtension());
         $result['uploadedPath'] = $savedFile->getPathname();
         return $result;
-    }
-
-    public function uploadSingeFile(Request $request){
     }
 
     private function validate3dFile(Request $request){

@@ -16,6 +16,7 @@ class CreateProduct3DModelsTable extends Migration
         Schema::create('product3_d_models', function (Blueprint $table) {
             $table->id();
             $table->foreignId('company_id')->constrained('companies')->onDelete('cascade');
+            $table->uuid('uuid');
             $table->string('name', 50)->nullable(false);
             $table->string('file_path', 255 )->nullable(false);
             $table->timestamps();
