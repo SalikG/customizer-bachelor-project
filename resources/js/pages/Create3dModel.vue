@@ -10,6 +10,19 @@
                     <button class="btn btn-secondary" id="inputFileAddon" v-on:click="loadFile()">Load</button>
                 </div>
             </div>
+            <div id="uploadProgressBar" class="collapsible" v-bind:class="uploadProgressClass">
+                <div class="progress">
+                    <div class="progress-bar progress-bar-striped progress-bar-animated"
+                         role="progressbar"
+                         v-bind:aria-valuenow="uploadProgress"
+                         aria-valuemin="0"
+                         aria-valuemax="100"
+                         v-bind:style="{width: uploadProgress + '%'}">{{uploadProgress}} %</div>
+                </div>
+            </div>
+            <div id="infoContainer">
+
+            </div>
         </div>
         <div id="rightPanel" class="col-sm-7 col-md-7 col-lg-7 col-xl-7">
             <ModelRenderer v-bind:model-path="currentFilePath"></ModelRenderer>
@@ -19,29 +32,38 @@
 
 <script>
 
-    import ModelRenderer from '../components/ModelRenderer'
+import ModelRenderer from '../components/ModelRenderer'
 
-    export default {
+export default {
         name: "Create3dModel",
         components: {ModelRenderer},
         data() {
             return {
                 file: '',
                 fileName: '',
-                currentFilePath: ''
+                currentFilePath: '',
+                isUploading3dModel: false,
+                uploadProgress: 0,
+                uploadProgressClass: 'collapsed',
             }
         },
         methods: {
             async loadFile(){
+                const self = this;
+                self.uploadProgress = 0;
+                self.loadingProgressExpand();
                 let formData = new FormData();
-                formData.append('file', this.file);
-                let response = await axios.post( 'file-upload/temporary-single-file',
-                    formData,
-                    {
-                        headers: {
-                            'Content-Type': 'multipart/form-data'
-                        }
+                formData.append('file', self.file);
+                let config = {
+                    headers: {
+                        'Content-Type': 'multipart/form-data'
+                    },
+                    onUploadProgress: function(progressEvent) {
+                        self.uploadProgress = Math.round((progressEvent.loaded * 100) / progressEvent.total);
                     }
+                };
+                let response = await axios.post( 'file-upload/temporary-single-file',
+                    formData, config,
                 ).then(function(data){
                     if (data['status'] === 200){
                         console.log("SUCCESS")
@@ -50,12 +72,21 @@
                 }).catch(function(){
                     console.log('FAILURE!!');
                 });
-                this.currentFilePath = response['data']['uploadedPath'];
+                self.currentFilePath = response['data']['uploadedPath'];
+                self.loadingProgressCollapse();
             },
+
             handleFileUpload(){
                 this.file = this.$refs.file.files[0]
-                console.log(this.$refs.file.files[0].name);
                 this.fileName = this.$refs.file.files[0].name
+            },
+
+            loadingProgressCollapse(){
+                this.uploadProgressClass = 'collapsed';
+            },
+
+            loadingProgressExpand(){
+                this.uploadProgressClass = 'expanded';
             }
         }
     }
@@ -64,10 +95,17 @@
 </script>
 
 <style scoped>
-    #leftPanel{
-
+    .collapsed{
+        max-height: 0;
     }
-    #rightPanel{
+    .collapsible{
+        position: relative;
+        overflow: hidden;
+        height: auto;
+        transition: max-height 2s ease-in-out;
+    }
 
+    .expanded{
+        max-height: 200px;
     }
 </style>
