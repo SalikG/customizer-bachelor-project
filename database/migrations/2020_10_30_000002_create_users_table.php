@@ -16,10 +16,11 @@ class CreateUsersTable extends Migration
         Schema::create('users', function (Blueprint $table) {
             $table->id();
             $table->foreignId('company_id')->constrained('companies')->onDelete('cascade');
-            $table->string('name')->nullable(false);
-            $table->string('email')->unique()->nullable(false);
+            $table->string('firstname', 50)->nullable(false);
+            $table->string('lastname', 50)->nullable(false);
+            $table->string('email', 100)->unique()->nullable(false);
             $table->timestamp('email_verified_at')->nullable(true);
-            $table->string('password')->nullable(false);
+            $table->string('password', 30)->nullable(false);
             $table->rememberToken();
             $table->timestamps();
         });

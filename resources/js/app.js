@@ -1,11 +1,5 @@
 require('./bootstrap');
 window.THREE  = require('three')
-// import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
-// window.Renderer = new THREE.WebGLRenderer();
-//
-// window.Scene = new THREE.Scene();
-// window.Camera = new THREE.PerspectiveCamera( 45, window.innerWidth / window.innerHeight, 1, 10000 );
-// window.OrbitControls = new OrbitControls( window.Camera, window.Renderer.domElement );
 
 import Vue from 'vue'
 import VueRouter from 'vue-router'
@@ -14,11 +8,15 @@ Vue.use(VueRouter)
 
 //Components
 import Index from './pages/Index'
+import Login from './pages/auth/Login'
+import Register from './pages/auth/Register'
 import Create3dModel from './pages/Create3dModel'
 
 //Routes
 const routes = [
     { path: '/', component: Index },
+    { path: '/login', component: Login },
+    { path: '/register', component: Register },
     { path: '/create-3d-model', component: Create3dModel }
 ]
 
