@@ -16,7 +16,6 @@ class UserController extends Controller
     public function register(Register $request)
     {
         $validatedData = $request->validated();
-
         try {
             DB::transaction(function () use ($validatedData) {
                 $company = Company::create(['name' => $validatedData['companyName']]);
