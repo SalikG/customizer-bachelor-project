@@ -87,21 +87,20 @@ export default {
                     }
                 })
                 .then((res) =>{
-                    console.log(res)
-                    console.log(res.data)
-                    let data = res.data;
-                    if(data['success'] === true){
+                    if(res.status === 200){
                         self.$router.push('login')
                     }
                 })
                 .catch((error) => {
-                    // error.response.status Check status code
                     if (error.response.status === 422){
                         for(const errFieldName in error.response.data.errors ){
                             for(const errorMsgIndex in error.response.data.errors[errFieldName]){
                                 this.serverResponseErrors.push(error.response.data.errors[errFieldName][errorMsgIndex]);
                             }
                         }
+                    }
+                    else if (error.response.status === 500){
+                        this.serverResponseErrors.push('SERVER ERROR');
                     }
                 })
         }

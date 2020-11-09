@@ -16,6 +16,7 @@ class UserController extends Controller
     public function register(Register $request)
     {
         $validatedData = $request->validated();
+
         try {
             DB::transaction(function () use ($validatedData) {
                 $company = Company::create(['name' => $validatedData['companyName']]);
@@ -27,10 +28,10 @@ class UserController extends Controller
                 ]);
             });
         } catch (\Throwable $e) {
-            return response(['success' => false, 'message' => 'SERVER ERROR'], 500);
+            return response(['message' => 'SERVER ERROR'], 500);
         }
 
-        return response(['success' => true, 'message' => 'Company and user created'], 200);
+        return response(['message' => 'Company and user created'], 200);
     }
 
     public function login(Login $request)
