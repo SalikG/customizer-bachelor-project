@@ -1,13 +1,13 @@
 <template>
-    <Test></Test>
+
 </template>
 
 <script>
 
-import Test from '../components/Test'
+import Header from '../components/Header'
 export default {
     name: "index",
-    components: {Test}
+    components: {Header}
 }
 </script>
 

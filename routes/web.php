@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\FileUploadController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -18,6 +19,12 @@ Route::get('/', function () {
     return view('app');
 });
 
+//USER AUTH
+Route::post('/auth/register', [UserController::class, 'register']);
+Route::post('/auth/login', [UserController::class, 'login']);
+Route::post('/auth/logout', [UserController::class, 'logout']);
 
-// FILEHANDLING
-Route::post('/file-upload/temporary-3d-model-single-file', [FileUploadController::class, 'temporary3dModelSingeFile']);
+
+
+// FILE HANDLING
+Route::middleware('auth:sanctum')->post('/file-upload/temporary-3d-model-single-file', [FileUploadController::class, 'temporary3dModelSingeFile']);

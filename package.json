@@ -25,6 +25,7 @@
     "dependencies": {
         "three": "0.122.0",
         "vue": "2.6.12",
-        "vue-router": "^3.4.8"
+        "vue-router": "^3.4.8",
+        "vuex": "^3.5.1"
     }
 }

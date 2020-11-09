@@ -15,18 +15,8 @@
 
 </head>
 <body>
-<div id="app" class="container">
-    <h1>Hello App!</h1>
-    <p>
-        <!-- use router-link component for navigation. -->
-        <!-- specify the link by passing the `to` prop. -->
-        <!-- `<router-link>` will be rendered as an `<a>` tag by default -->
-        <router-link to="/">Go to Index</router-link>
-        <router-link to="/create-3d-model">Go to 3d model creation</router-link>
-    </p>
-    <!-- route outlet -->
-    <!-- component matched by the route will render here -->
-    <router-view></router-view>
+<div id="app">
+
 </div>
 <!-- Scripts -->
 <script src="{{ asset('js/app.js') }}"></script>
