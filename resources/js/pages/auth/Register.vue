@@ -55,9 +55,9 @@ export default {
         }
     },
     methods: {
-        checkRegisterForm: function (e) {
+        checkRegisterForm: function () {
             this.errors = {};
-            this.serverResponseErrorMsg = {};
+            this.serverResponseErrors = [];
 
             if (!this.RegisterData.companyName) {
                 this.errors.companyNameError = 'Company name required.';
@@ -73,11 +73,12 @@ export default {
             }
 
             if (_.isEmpty(this.errors)){
-                this.submitForm(e)
+                this.submitForm()
             }
         },
 
-        submitForm(e){
+        submitForm(){
+            const self = this;
             axios.post('/auth/register',
                 this.RegisterData,
             {
@@ -86,6 +87,12 @@ export default {
                     }
                 })
                 .then((res) =>{
+                    console.log(res)
+                    console.log(res.data)
+                    let data = res.data;
+                    if(data['success'] === true){
+                        self.$router.push('login')
+                    }
                 })
                 .catch((error) => {
                     // error.response.status Check status code

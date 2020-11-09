@@ -19,10 +19,12 @@ Route::get('/', function () {
     return view('app');
 });
 
-//USER
+//USER AUTH
 Route::post('/auth/register', [UserController::class, 'register']);
+Route::post('/auth/login', [UserController::class, 'login']);
+Route::post('/auth/logout', [UserController::class, 'logout']);
 
 
 
 // FILE HANDLING
-Route::post('/file-upload/temporary-3d-model-single-file', [FileUploadController::class, 'temporary3dModelSingeFile']);
+Route::middleware('auth:sanctum')->post('/file-upload/temporary-3d-model-single-file', [FileUploadController::class, 'temporary3dModelSingeFile']);
