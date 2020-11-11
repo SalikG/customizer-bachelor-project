@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\FileUploadController;
+use App\Http\Controllers\Product3dModelController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -24,7 +25,10 @@ Route::post('/auth/register', [UserController::class, 'register']);
 Route::post('/auth/login', [UserController::class, 'login']);
 Route::post('/auth/logout', [UserController::class, 'logout']);
 
+//3d Model
+Route::middleware('auth:sanctum')->get('/get-3d-model-list', [Product3dModelController::class, 'get3dModelList']);
 
 
 // FILE HANDLING
 Route::middleware('auth:sanctum')->post('/file-upload/temporary-3d-model-single-file', [FileUploadController::class, 'temporary3dModelSingeFile']);
+Route::middleware('auth:sanctum')->post('/file-upload/save-3d-model-single-file', [FileUploadController::class, 'save3dModelFromTemp']);

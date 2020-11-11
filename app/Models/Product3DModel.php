@@ -9,6 +9,9 @@ class Product3DModel extends Model
 {
     use HasFactory;
 
+
+    protected $fillable = ['company_id', 'name', 'file_path'];
+
     public function company(){
         return $this->belongsTo(Company::class);
     }

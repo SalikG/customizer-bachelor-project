@@ -19,6 +19,7 @@ import Index from './pages/Index'
 import Login from './pages/auth/Login'
 import Register from './pages/auth/Register'
 import Create3dModel from './pages/Create3dModel'
+import List3dModels from './pages/List3dModels'
 
 // Stores
 import auth from './stores/auth'
@@ -35,7 +36,8 @@ const routes = [
     { path: '/', component: Index, meta: {allowAnonymous: true} },
     { path: '/login', component: Login, name: 'login', meta: {allowAnonymous: true} },
     { path: '/register', component: Register, meta: {allowAnonymous: true} },
-    { path: '/create-3d-model', component: Create3dModel}
+    { path: '/create-3d-model', component: Create3dModel, name: 'create-3d-model'},
+    { path: '/list-3d-models', component: List3dModels, name: 'list-3d-models'}
 ]
 
 const router = new VueRouter({
@@ -73,7 +75,7 @@ const app = store.dispatch('auth/me').then(() => {
         template:
             "<div class='container'>" +
                 "<Header></Header> " +
-                "<router-view></router-view>" +
+                "<router-view :key='$route.fullPath'></router-view>" +
             "</div>",
         router,
         store: store

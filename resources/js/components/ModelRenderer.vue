@@ -1,6 +1,6 @@
 <template>
-    <div id="canvasContainer">
-        <div v-bind:class="[isLoading3dModel ? activeClass : noneActiveClass,]">
+    <div v-bind:id="canvasContainerUniqueId">
+        <div v-bind:class="[isLoading ? activeClass : noneActiveClass,]">
             <div class="dot-pulse"></div>
         </div>
     </div>
@@ -12,10 +12,9 @@
 
     export default {
         name: "ModelRenderer",
-        props: ['modelPath'],
+        props: ['modelPath', 'isUploading3dModel', 'canvasContainerUniqueId', 'background'],
         data(){
             return {
-                isLoading3dModel: false,
                 loading3dModelProgress: 0,
                 activeClass: 'activeLoading',
                 noneActiveClass: 'd-none',
@@ -33,29 +32,38 @@
         },
         mounted: function (){
             this.init();
+            if (this.modelPath !== ''){
+                this.update3dModel(this.modelPath);
+            }
             this.animate();
         },
         watch: {
             modelPath: function (newPath, oldPath){
-                this.isLoading3dModel = true;
                 this.update3dModel(newPath);
-                this.isLoading3dModel = false;
+            }
+        },
+        computed: {
+            isLoading3dModel(){
+                return !(this.loading3dModelProgress === 0 || this.loading3dModelProgress === 100);
+            },
+            isLoading(){
+                return [this.isUploading3dModel, this.isLoading3dModel].some(bool => bool === true);
             }
         },
         methods: {
             init(){
-                this.maxWidth = document.getElementById('canvasContainer').clientWidth;
+                this.maxWidth = document.getElementById(this.canvasContainerUniqueId).clientWidth;
                 this.maxHeight = this.maxWidth - 100;
                 this.renderer = new THREE.WebGLRenderer();
                 this.scene = new THREE.Scene();
                 this.camera = new THREE.PerspectiveCamera( 45, this.maxWidth / this.maxHeight, 1, 10000 );
                 this.orbitControls = new OrbitControls( this.camera, this.renderer.domElement );
-                this.scene.background = new THREE.Color( 0xEEEEEE );
+                this.scene.background = new THREE.Color( this.background );
                 this.renderer.setSize(this.maxWidth, this.maxHeight);
                 this.controls = this.orbitControls;
                 this.camera.position.set(0, 2, 500);
                 this.controls.update();
-                document.getElementById('canvasContainer').appendChild(this.renderer.domElement);
+                document.getElementById(this.canvasContainerUniqueId).appendChild(this.renderer.domElement);
             },
 
             update3dModel(filePath){
@@ -93,6 +101,7 @@
                     },
                     // called when loading is in progresses
             function ( xhr ) {
+                        self.loading3dModelProgress = (xhr.loaded / xhr.total * 100)
                         console.log( ( xhr.loaded / xhr.total * 100 ) + '% loaded' );
                     },
                     // called when loading has errors

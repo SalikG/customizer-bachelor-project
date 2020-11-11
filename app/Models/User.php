@@ -45,4 +45,9 @@ class User extends Authenticatable
     public function company(){
         return $this->belongsTo(Company::class);
     }
+
+    public function product3dModels(){
+        return Product3DModel::select('*')
+            ->where('company_id', auth()->user()->company_id);
+    }
 }
