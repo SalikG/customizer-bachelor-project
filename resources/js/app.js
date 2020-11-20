@@ -64,20 +64,22 @@ router.beforeEach((to, from, next) => {
 
 //The dispatch ensures that a refresh does not make the client loose authentication
 const app = store.dispatch('auth/me').then(() => {
-        new Vue({
-        el: '#app',
-        components: {Header},
-        data(){
-            return {
-                isLoggedIn: localStorage.getItem('isLoggedIn'),
-            }
-        },
-        template:
-            "<div class='container'>" +
-                "<Header></Header> " +
+
+new Vue({
+    components: {Header},
+    data(){
+        return {
+            isLoggedIn: localStorage.getItem('isLoggedIn'),
+        }
+    },
+    template:
+        "<div>" +
+            "<Header></Header> " +
+            "<div class='container pt-3'>" +
                 "<router-view :key='$route.fullPath'></router-view>" +
-            "</div>",
-        router,
-        store: store
-    })
+            "</div>" +
+        "</div>",
+    router,
+    store: store
+}).$mount('#app')
 });

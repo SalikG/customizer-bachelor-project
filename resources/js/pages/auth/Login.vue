@@ -56,7 +56,6 @@ export default {
             form.append('email', this.LoginData.email);
             form.append('password', this.LoginData.password);
             let res = await this.signIn(form)
-            console.log(res)
             if (res === false){this.serverResponseErrors.push('Wrong credentials'); return}
             await this.$router.push('create-3d-model')
         }

@@ -19,6 +19,7 @@ class CreateTexturesTable extends Migration
             $table->string('name', 50)->nullable(false);
             $table->string('description', 255)->nullable(true);
             $table->string('file_path', 255)->nullable(false);
+            $table->string('icon_path', 255)->nullable(false);
             $table->timestamps();
         });
     }

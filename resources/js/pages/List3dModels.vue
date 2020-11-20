@@ -1,33 +1,28 @@
 <template>
     <div class="row">
-        <div class="col-sm-12 col-md-4 col-lg-3" v-for="model in models">
+        <div class="col-sm-12 col-md-4 col-lg-3 model-list-item" v-for="model in models">
             <div>
-                <ModelRenderer ref="modelRenderer" v-bind:background="0xEEEEEE" v-bind:canvas-container-unique-id="model.id" v-bind:model-path="model.file_path"></ModelRenderer>
+                <div class="model-image" v-bind:style="{'background': 'linear-gradient(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.9)),url(' + model.display_img_path + ')'}">
+                </div>
+                <p class="dot-text text-light model-name">
+                    {{model.name}}
+                </p>
             </div>
-            <h5>{{model.name}}</h5>
         </div>
     </div>
 </template>
 
 <script>
 
-import ModelRenderer from '../components/ModelRenderer'
 
 export default {
     name: "List3dModels",
-    components: {ModelRenderer},
     data() {
         return {
-            models: [
-                {
-                    id: 0,
-                    name: '',
-                    file_path: '',
-                }
-            ]
+            models: []
         }
     },
-    mounted() {
+    mounted: function() {
         this.get3dModels()
     },
     methods: {
@@ -37,7 +32,6 @@ export default {
             .then((res) => {
                 if (res.status === 200){
                     self.models = res.data;
-                    console.log(res.data);
                 }
             }).catch((err) => {
                 console.log('SERVER ERROR')
@@ -48,5 +42,42 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+    .dot-text{
+        overflow: hidden;
+        text-overflow: ellipsis;
+        display: -webkit-box;
+        -webkit-line-clamp: 1; /* after 3 line show ... */
+        -webkit-box-orient: vertical;
+    }
+    .model-list-item {
+        cursor: pointer;
+        height: 200px;
+        width: 200px;
+        div{
+            height: 100%;
+            width: 100%;
+            overflow: hidden;
 
+            .model-image {
+                height: 100%;
+                width: 100%;
+                background-size: contain !important;
+                background-repeat: no-repeat !important;
+                background-position: center !important;
+                transition: transform 0.2s;
+            }
+            .model-name {
+                position: absolute;
+                bottom: 0;
+                left: 30px;
+                font-size: 1.2rem;
+                text-decoration: underline;
+            }
+        }
+    }
+    .model-list-item:hover {
+        .model-image{
+            transform: scale(1.05);
+        }
+    }
 </style>

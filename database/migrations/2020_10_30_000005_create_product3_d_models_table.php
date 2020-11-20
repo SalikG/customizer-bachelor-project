@@ -18,6 +18,7 @@ class CreateProduct3DModelsTable extends Migration
             $table->foreignId('company_id')->constrained('companies')->onDelete('cascade');
             $table->string('name', 50)->nullable(false);
             $table->string('file_path', 255 )->nullable(false);
+            $table->string('display_img_path', 255 )->nullable(false);
             $table->timestamps();
         });
     }

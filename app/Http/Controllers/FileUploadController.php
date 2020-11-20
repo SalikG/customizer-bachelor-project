@@ -19,7 +19,10 @@ class FileUploadController extends Controller
             return response(['message' => 'Unsupported Media Type'], 415);
         }
 
-        $tempFilePath = $request->file('file')->storeAs('public/temp',
+        $sessionId = $request->session()->getId();
+
+        $tempFilePath = $request->file('file')->storeAs(
+            'public/temp/'.$sessionId,
             (string)Str::orderedUuid().".".$request->file('file')->getClientOriginalExtension());
         if ($tempFilePath){
             $tempFilePath = str_replace('public/', 'storage/', $tempFilePath);
@@ -31,20 +34,29 @@ class FileUploadController extends Controller
     public function save3dModelFromTemp(Save3dModelFromTemp $request){
         $validatedData = $request->validated();
         $companyUUID = $request->user()->company()->first()->uuid;
-        $fileUUID = basename($validatedData['tempFilePath']);
-        $newFilePath = 'public/'.$companyUUID.'/3dModels/'.$fileUUID;
+        $displayImgFilePath = $request->file('displayImgFile')->storeAs(
+            'public/'.$companyUUID.'/3dModelDisplayImages/',
+            (string)Str::orderedUuid().".".$request->file('displayImgFile')->getClientOriginalExtension());
 
-        $tempFilePath = 'public/temp/'.$fileUUID;
+        $modelFileUUID = basename($validatedData['tempFilePath']);
+        $newFilePath = 'public/'.$companyUUID.'/3dModels/'.$modelFileUUID;
+
+        $sessionId = $request->session()->getId();
+        $tempFilePath = 'public/temp/'.$sessionId.'/'.$modelFileUUID;
         $isFileSaved = Storage::move($tempFilePath, $newFilePath);
 
         // File move successful
-        if ($isFileSaved){
-            $publicPath = str_replace('public/', 'storage/', $newFilePath);
+        if ($isFileSaved && $displayImgFilePath){
+            $publicDisplayImgFilePath = str_replace('public/', 'storage/', $displayImgFilePath);
+
+            $publicModelFilePath = str_replace('public/', 'storage/', $newFilePath);
             $product3DModel = Product3DModel::create([
                 'company_id' => $request->user()->company_id,
                 'name' => $validatedData['name'],
-                'file_path' =>  $publicPath
+                'file_path' =>  $publicModelFilePath,
+                'display_img_path' => $publicDisplayImgFilePath
             ]);
+            Storage::deleteDirectory('public/temp/'.$sessionId);
             return response(['message' => 'success'], 200);
         }
         return response(['message' => 'SERVER ERROR possibly file not found'], 500);

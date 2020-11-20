@@ -27,6 +27,7 @@ class Save3dModelFromTemp extends FormRequest
         return [
             'name' => ['required', 'max:50'],
             'tempFilePath' => ['required'],
+            'displayImgFile' => ['required', 'image'],
         ];
     }
 }

@@ -1,14 +1,13 @@
 <template>
     <div class="row">
         <div id="leftPanel" class="col-sm-5 col-md-5 col-lg-5 col-xl-5">
+            <h5>3d File</h5>
             <div class="input-group mb-3">
                 <div class="custom-file">
-                    <input type="file" id="fileInput" ref="file" v-on:change="handleFileUpload()" class="custom-file-input"/>
-                    <label id="fileInputLabel" class="custom-file-label" for="fileInput" aria-describedby="inputFileAddon">{{ fileName === '' ? 'Choose file' : fileName }}</label>
+                    <input type="file" id="fileInput" ref="modelFile" v-on:change="handle3dModelFileUpload()" class="custom-file-input"/>
+                    <label id="fileInputLabel" class="custom-file-label" for="fileInput" aria-describedby="inputFileAddon">{{ modelFileName === '' ? 'Choose file' : modelFileName }}</label>
                 </div>
-                <div class="input-group-append">
-                    <button class="btn btn-secondary" id="inputFileAddon" v-on:click="loadFile()">Load</button>
-                </div>
+                <p v-for="error in modelFileValidationErrors" class="errorMessage pb-3">{{ error }}</p>
             </div>
             <div id="uploadProgressBar" class="collapsible" v-bind:class="uploadProgressClass">
                 <div class="progress">
@@ -26,7 +25,19 @@
                     <input class="form-control" id="fileName" type="text" v-model="FormData.displayName">
                     <small id="fileNameHelp" class="form-text text-muted">This name will also be shown in your Customizer</small>
                 </div>
+                <div class="form-group">
+                    <label for="displayImgFileInput">Display image:</label>
+                    <div class="input-group">
+                        <div class="custom-file">
+                            <input type="file" id="displayImgFileInput" ref="displayImgFile" v-on:change="handleDisplayImgFileUpload()" class="custom-file-input"/>
+                            <label id="displayImgFileInputLabel" class="custom-file-label" for="displayImgFileInput" aria-describedby="inputFileAddon">{{ displayImgFileName === '' ? 'Choose file' : displayImgFileName }}</label>
+                        </div>
+                    </div>
+                    <small id="displayImgFileHelp" class="form-text text-muted">This will be shown in your overview of 3d models</small>
+                    <p v-for="error in displayImgFileValidationErrors" class="errorMessage pb-3">{{ error }}</p>
+                </div>
                 <div id="materialList" class="list-group">
+                    <label for="materialList">Materials <small>(click to highlight)</small>:</label>
                     <button v-for="material in materialNames" v-bind:id="material" class="list-group-item list-group-item-action" v-on:click="highlightSelectedMaterial($event)">{{material}}</button>
                 </div>
             </div>
@@ -38,7 +49,7 @@
                            v-bind:canvas-container-unique-id="'canvasContainer'"
                            v-bind:isUploading3dModel="isUploading3dModel"
                            v-bind:background="0xEEEEEE"></ModelRenderer>
-            <button class="btn btn-success btn-block" v-on:click="save3dModel" v-bind:class="isLoadedControllerClass" data-toggle="modal" data-target="#saveCompleteModal">Save</button>
+            <button class="btn btn-success btn-block" v-on:click="save3dModel" v-bind:class="isLoadedControllerClass" v-bind:disabled="!formIsValid" data-toggle="modal" data-target="#saveCompleteModal">Save</button>
         </div>
         <div class="modal fade" id="saveCompleteModal" tabindex="-1" aria-hidden="true" data-backdrop="static" data-keyboard="false">
             <div class="modal-dialog modal-dialog-centered">
@@ -77,23 +88,34 @@ export default {
         data() {
             return {
                 reloadId: Math.floor(Math.random() * 100),
-                file: '',
-                fileName: '',
+                modelFile: '',
+                modelFileName: '',
+                displayImgFileName: '',
                 FormData: {
                     displayName: '',
                     currentFilePath: '',
+                    displayImgFile: '',
                 },
                 uploadProgress: 0,
                 uploadProgressClass: 'collapsed',
                 isLoadedControllerClass: 'd-none',
                 model3d: Object,
                 materialNames: [],
+                modelFileValidationErrors: [],
+                displayImgFileValidationErrors: [],
                 saveErrors: [],
             }
         },
         computed: {
             isUploading3dModel(){
                 return !(this.uploadProgress === 0 || this.uploadProgress === 100);
+            },
+            formIsValid(){
+                return this.modelFileValidationErrors.length === 0 &&
+                    this.displayImgFileValidationErrors.length === 0 &&
+                    this.FormData.displayImgFile !== '' &&
+                    this.FormData.currentFilePath !== '' &&
+                    this.FormData.displayName !== '';
             }
         },
         methods: {
@@ -138,11 +160,13 @@ export default {
 
             async loadFile(){
                 const self = this;
+                self.modelFileValidationErrors = [];
+                self.saveErrors = [];
                 self.resetInfoContainer()
                 self.uploadProgress = 0;
                 self.loadingProgressExpand();
                 let formData = new FormData();
-                formData.append('file', self.file);
+                formData.append('file', self.modelFile);
                 let config = {
                     headers: {
                         'Content-Type': 'multipart/form-data'
@@ -159,8 +183,11 @@ export default {
                         self.FormData.currentFilePath = res['data']['uploadedPath'];
                         self.loadingProgressCollapse();
                     }
-                }).catch(function(){
-                    console.log('FAILURE!!');
+                }).catch(function(err){
+                    if (err.response.status === 415){
+                        self.modelFileValidationErrors.push(err.response.statusText);
+                        self.loadingProgressCollapse();
+                    }
                 });
 
             },
@@ -172,8 +199,17 @@ export default {
                 let formData = new FormData();
                 formData.append('name', self.FormData.displayName);
                 formData.append('tempFilePath', self.FormData.currentFilePath);
+                formData.append('displayImgFile', self.FormData.displayImgFile);
 
-                await axios.post('/file-upload/save-3d-model-single-file', formData)
+                let config = {
+                    headers: {
+                        'Content-Type': 'multipart/form-data'
+                    },
+                    onUploadProgress: function(progressEvent) {
+                        console.log(Math.round((progressEvent.loaded * 100) / progressEvent.total));
+                    }
+                };
+                await axios.post('/file-upload/save-3d-model-single-file', formData, config)
                     .then((res) => {
                         if(res.status === 200){
                             document.querySelector('.circle-loader').classList.toggle('load-complete')
@@ -184,11 +220,30 @@ export default {
                     })
             },
 
-            handleFileUpload(){
+            handle3dModelFileUpload(){
                 this.infoContainerCollapse();
-                this.file = this.$refs.file.files[0];
-                this.fileName = this.$refs.file.files[0].name.replace(/\.[^/.]+$/, "");
-                this.FormData.displayName = this.fileName;
+                this.modelFile = this.$refs.modelFile.files[0];
+                this.modelFileName = this.$refs.modelFile.files[0].name.replace(/\.[^/.]+$/, "");
+                this.FormData.displayName = this.modelFileName;
+                this.loadFile()
+            },
+
+            handleDisplayImgFileUpload(){
+                this.displayImgFileValidationErrors = [];
+                if(this.validateImg(this.$refs.displayImgFile.files[0])){
+                    this.FormData.displayImgFile = this.$refs.displayImgFile.files[0];
+                    this.displayImgFileName = this.$refs.displayImgFile.files[0].name.replace(/\.[^/.]+$/, "");
+                }
+            },
+
+            validateImg(file){
+                let isValid = (file.type === 'image/png') ? true :
+                    (file.type === 'image/jpg') ? true :
+                    (file.type === 'image/jpeg');
+                if (!isValid) {
+                    this.displayImgFileValidationErrors.push('Only jpg, jpeg or png files allowed!');
+                }
+                return isValid;
             },
 
             loadingProgressCollapse(){
@@ -214,6 +269,14 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+    .errorMessage{
+        width: 100%;
+        margin-top: .25rem;
+        font-size: 85%;
+        color: #dc3545;
+        margin-bottom: 0;
+    }
+
     .collapsed{
         max-height: 0;
     }
