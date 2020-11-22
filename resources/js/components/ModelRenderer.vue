@@ -50,6 +50,9 @@
                 return [this.isUploading3dModel, this.isLoading3dModel].some(bool => bool === true);
             }
         },
+        destroyed() {
+            window.removeEventListener('resize',  this.handleResize)
+        },
         methods: {
             init(){
                 this.maxWidth = document.getElementById(this.canvasContainerUniqueId).clientWidth;
@@ -64,13 +67,15 @@
                 this.camera.position.set(0, 2, 500);
                 this.controls.update();
                 document.getElementById(this.canvasContainerUniqueId).appendChild(this.renderer.domElement);
-                window.addEventListener('resize', () => {
-                    this.maxWidth = document.getElementById(this.canvasContainerUniqueId).clientWidth;
-                    this.maxHeight = this.maxWidth - 100;
-                    this.renderer.setSize(this.maxWidth, this.maxHeight);
-                    this.camera.aspect = this.maxWidth / this.maxHeight;
-                    this.camera.updateProjectionMatrix();
-                })
+                window.addEventListener('resize', this.handleResize)
+            },
+
+            handleResize () {
+                this.maxWidth = document.getElementById(this.canvasContainerUniqueId).clientWidth;
+                this.maxHeight = this.maxWidth - 100;
+                this.renderer.setSize(this.maxWidth, this.maxHeight);
+                this.camera.aspect = this.maxWidth / this.maxHeight;
+                this.camera.updateProjectionMatrix();
             },
 
             update3dModel(filePath){

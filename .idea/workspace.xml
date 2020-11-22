@@ -24,15 +24,8 @@
   <component name="ChangeListManager">
     <list default="true" id="a09fb66f-83a5-4a8c-bdc6-99822e720ecb" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/css/app.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/css/app.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/public/js/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/app.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/components/Header.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/Header.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/js/components/ModelRenderer.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/ModelRenderer.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/pages/Create3dModel.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/pages/Create3dModel.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/pages/List3dModels.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/pages/List3dModels.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/pages/auth/Login.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/pages/auth/Login.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/pages/auth/Register.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/pages/auth/Register.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/sass/_variables.scss" beforeDir="false" afterPath="$PROJECT_DIR$/resources/sass/_variables.scss" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -285,7 +278,7 @@
       <workItem from="1605709675974" duration="659000" />
       <workItem from="1605791146084" duration="20000" />
       <workItem from="1605872468865" duration="19945000" />
-      <workItem from="1606037315533" duration="7037000" />
+      <workItem from="1606037315533" duration="9547000" />
     </task>
     <servers />
   </component>
@@ -336,22 +329,22 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="548" y="186" key="FileChooserDialogImpl/0.0.1536.824@0.0.1536.824" timestamp="1604398776379" />
-    <state width="1493" height="189" key="GridCell.Tab.0.bottom" timestamp="1606037626337">
+    <state width="1493" height="189" key="GridCell.Tab.0.bottom" timestamp="1606046900740">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="189" key="GridCell.Tab.0.bottom/0.0.1536.824@0.0.1536.824" timestamp="1606037626337" />
-    <state width="1493" height="189" key="GridCell.Tab.0.center" timestamp="1606037626337">
+    <state width="1493" height="189" key="GridCell.Tab.0.bottom/0.0.1536.824@0.0.1536.824" timestamp="1606046900740" />
+    <state width="1493" height="189" key="GridCell.Tab.0.center" timestamp="1606046900740">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="189" key="GridCell.Tab.0.center/0.0.1536.824@0.0.1536.824" timestamp="1606037626337" />
-    <state width="1493" height="189" key="GridCell.Tab.0.left" timestamp="1606037626337">
+    <state width="1493" height="189" key="GridCell.Tab.0.center/0.0.1536.824@0.0.1536.824" timestamp="1606046900740" />
+    <state width="1493" height="189" key="GridCell.Tab.0.left" timestamp="1606046900740">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="189" key="GridCell.Tab.0.left/0.0.1536.824@0.0.1536.824" timestamp="1606037626337" />
-    <state width="1493" height="189" key="GridCell.Tab.0.right" timestamp="1606037626337">
+    <state width="1493" height="189" key="GridCell.Tab.0.left/0.0.1536.824@0.0.1536.824" timestamp="1606046900740" />
+    <state width="1493" height="189" key="GridCell.Tab.0.right" timestamp="1606046900740">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="189" key="GridCell.Tab.0.right/0.0.1536.824@0.0.1536.824" timestamp="1606037626337" />
+    <state width="1493" height="189" key="GridCell.Tab.0.right/0.0.1536.824@0.0.1536.824" timestamp="1606046900740" />
     <state x="604" y="332" key="NewPhpFileDialog" timestamp="1604418686447">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
