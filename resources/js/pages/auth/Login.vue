@@ -1,6 +1,6 @@
 <template>
-    <div class="row justify-content-md-center">
-        <div class="col-sm-12 col-md-5 col-lg-5 col-lg-5">
+    <div class="row justify-content-center">
+        <div class="col-6 col-sm-6 col-md-5 col-lg-5">
             <h1>Login</h1>
             <form v-on:submit.prevent="checkLoginForm" method="post">
                 <div class="form-group">
@@ -12,7 +12,7 @@
                     <input v-model="LoginData.password" type="password" class="form-control" id="password">
                 </div>
                 <p v-for="error in serverResponseErrors" class="errorMessage pb-3">{{ error }}</p>
-                <button type="submit" class="btn btn-primary">Submit</button>
+                <button type="submit" class="btn btn-primary">Login</button>
             </form>
         </div>
     </div>
@@ -57,7 +57,7 @@ export default {
             form.append('password', this.LoginData.password);
             let res = await this.signIn(form)
             if (res === false){this.serverResponseErrors.push('Wrong credentials'); return}
-            await this.$router.push('create-3d-model')
+            await this.$router.push('list-3d-models')
         }
     }
 }

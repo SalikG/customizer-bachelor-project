@@ -1,5 +1,5 @@
 <template>
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+<nav class="navbar navbar-expand-sm navbar-dark bg-dark">
     <router-link class="navbar-brand" to="/">Customizer</router-link>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -13,7 +13,7 @@
             <li class="nav-item" v-if="authenticated"><router-link class="nav-link" to="/create-3d-model">New model</router-link></li>
             <li class="nav-item" v-if="authenticated"><router-link class="nav-link" to="/list-3d-models">Your models</router-link></li>
         </ul>
-        <ul class="navbar-nav ml-auto">
+        <ul class="navbar-nav ml-auto mr-3">
             <li class="nav-item float-right" v-if="!authenticated"><router-link class="nav-link" to="/register">Register</router-link></li>
             <li class="nav-item float-right" v-if="!authenticated"><router-link class="nav-link" to="/login">Login</router-link></li>
             <li class="nav-item float-right" v-if="authenticated"><a class="nav-link" id="logout-link" href="#" @click.prevent="signOut">Logout</a></li>

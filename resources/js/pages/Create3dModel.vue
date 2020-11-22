@@ -49,8 +49,13 @@
                            v-bind:canvas-container-unique-id="'canvasContainer'"
                            v-bind:isUploading3dModel="isUploading3dModel"
                            v-bind:background="0xEEEEEE"></ModelRenderer>
-            <button class="btn btn-success btn-block" v-on:click="save3dModel" v-bind:class="isLoadedControllerClass" v-bind:disabled="!formIsValid" data-toggle="modal" data-target="#saveCompleteModal">Save</button>
+            <p v-for="error in serverValidationErrors" class="errorMessage pb-3">{{ error }}</p>
+            <button class="btn btn-success btn-block"
+                    v-on:click="save3dModel"
+                    v-bind:class="isLoadedControllerClass">Save</button>
+<!--                    v-bind:disabled="!formIsValid" -->
         </div>
+
         <div class="modal fade" id="saveCompleteModal" tabindex="-1" aria-hidden="true" data-backdrop="static" data-keyboard="false">
             <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content">
@@ -103,7 +108,7 @@ export default {
                 materialNames: [],
                 modelFileValidationErrors: [],
                 displayImgFileValidationErrors: [],
-                saveErrors: [],
+                serverValidationErrors: [],
             }
         },
         computed: {
@@ -161,7 +166,7 @@ export default {
             async loadFile(){
                 const self = this;
                 self.modelFileValidationErrors = [];
-                self.saveErrors = [];
+                self.serverValidationErrors = [];
                 self.resetInfoContainer()
                 self.uploadProgress = 0;
                 self.loadingProgressExpand();
@@ -194,8 +199,7 @@ export default {
 
             async save3dModel(){
                 const self = this;
-                self.saveErrors = [];
-
+                self.serverValidationErrors = [];
                 let formData = new FormData();
                 formData.append('name', self.FormData.displayName);
                 formData.append('tempFilePath', self.FormData.currentFilePath);
@@ -212,11 +216,18 @@ export default {
                 await axios.post('/file-upload/save-3d-model-single-file', formData, config)
                     .then((res) => {
                         if(res.status === 200){
+                            $("#saveCompleteModal").modal()
                             document.querySelector('.circle-loader').classList.toggle('load-complete')
                             $('.checkmark').toggle()
                         }
                     }).catch((err) => {
-                        console.log('SERVER ERROR')
+                        if (err.response.status === 422){
+                            Object.keys(err.response.data.errors).forEach((keyName) => {
+                                err.response.data.errors[keyName].forEach((errorMsg) => {
+                                    self.serverValidationErrors.push(errorMsg)
+                                })
+                            })
+                        }
                     })
             },
 

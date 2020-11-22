@@ -1,6 +1,6 @@
 <template>
     <div class="row justify-content-md-center">
-        <div class="col-sm-12 col-md-5 col-lg-5 col-lg-5">
+        <div class="col-12 col-sm-12 col-md-8 col-lg-6">
             <h1>Register</h1>
             <form v-on:submit.prevent="checkRegisterForm" method="post">
                 <div class="form-group">
@@ -8,12 +8,12 @@
                     <input v-model="RegisterData.companyName" type="text" class="form-control" id="companyName">
                     <p v-if="'companyNameError' in errors" class="errorMessage">{{ this.errors.companyNameError }}</p>
                 </div>
-                <div class="form-group row">
-                    <div class="col">
+                <div class="row">
+                    <div class="form-group col-12 col-sm-6 col-md-6 col-lg-6">
                         <label for="firstname">Firstname</label>
                         <input v-model="RegisterData.firstname" type="text" class="form-control" id="firstname">
                     </div>
-                    <div class="col">
+                    <div class="form-group col-12 col-sm-6 col-md-6 col-lg-6">
                         <label for="lastname">Lastname</label>
                         <input v-model="RegisterData.lastname" type="text" class="form-control" id="lastname">
                     </div>
