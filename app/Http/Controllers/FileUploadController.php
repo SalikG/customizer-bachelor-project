@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\Save3dModelFromTemp;
-use App\Models\Product3DModel;
+use App\Models\Product3dModel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
@@ -50,13 +50,22 @@ class FileUploadController extends Controller
             $publicDisplayImgFilePath = str_replace('public/', 'storage/', $displayImgFilePath);
 
             $publicModelFilePath = str_replace('public/', 'storage/', $newFilePath);
-            $product3DModel = Product3DModel::create([
+            $product3dModel = Product3dModel::create([
                 'company_id' => $request->user()->company_id,
                 'name' => $validatedData['name'],
                 'file_path' =>  $publicModelFilePath,
                 'display_img_path' => $publicDisplayImgFilePath
             ]);
             Storage::deleteDirectory('public/temp/'.$sessionId);
+
+            $meshMaterialNames = json_decode($validatedData['meshMaterialNames']);
+            foreach ($meshMaterialNames as $meshMaterialName){
+                $product3dModel->meshMaterials()->create([
+                    'material_name' => $meshMaterialName,
+                    'display_name' => $meshMaterialName
+                ]);
+            }
+
             return response(['message' => 'success'], 200);
         }
         return response(['message' => 'SERVER ERROR possibly file not found'], 500);

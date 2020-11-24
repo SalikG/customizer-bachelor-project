@@ -5,13 +5,15 @@
         </router-link>
         <div class="row">
             <div class="col-12 col-sm-12 col-md-4 col-lg-3 mb-3 model-list-item" v-for="model in models">
-                <div>
-                    <div class="model-image" v-bind:style="{'background': 'linear-gradient(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.9)),url(' + model.display_img_path + ')'}">
+                <router-link :to="{name: 'view-3d-model', params: {model: model}}">
+                    <div>
+                        <div class="model-image" v-bind:style="{'background': 'linear-gradient(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.9)),url(' + model.display_img_path + ')'}">
+                        </div>
+                        <p class="dot-text text-light model-name">
+                            {{model.name}}
+                        </p>
                     </div>
-                    <p class="dot-text text-light model-name">
-                        {{model.name}}
-                    </p>
-                </div>
+                </router-link>
             </div>
         </div>
     </div>
@@ -33,7 +35,7 @@ export default {
     methods: {
         get3dModels(){
             const self = this;
-            axios.get('/get-3d-model-list')
+            axios.get('/models')
             .then((res) => {
                 if (res.status === 200){
                     self.models = res.data;

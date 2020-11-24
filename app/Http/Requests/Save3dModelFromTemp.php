@@ -28,6 +28,7 @@ class Save3dModelFromTemp extends FormRequest
             'name' => ['required', 'max:50'],
             'tempFilePath' => ['required'],
             'displayImgFile' => ['required', 'image'],
+            'meshMaterialNames' => ['json'],
         ];
     }
 }

@@ -1,4 +1,5 @@
 require('./bootstrap');
+require('@fortawesome/fontawesome-free')
 window.THREE  = require('three')
 
 import Vue from 'vue'
@@ -20,6 +21,7 @@ import Login from './pages/auth/Login'
 import Register from './pages/auth/Register'
 import Create3dModel from './pages/Create3dModel'
 import List3dModels from './pages/List3dModels'
+import View3dModel from './pages/View3dModel'
 
 // Stores
 import auth from './stores/auth'
@@ -37,7 +39,8 @@ const routes = [
     { path: '/login', component: Login, name: 'login', meta: {allowAnonymous: true} },
     { path: '/register', component: Register, meta: {allowAnonymous: true} },
     { path: '/create-3d-model', component: Create3dModel, name: 'create-3d-model'},
-    { path: '/list-3d-models', component: List3dModels, name: 'list-3d-models'}
+    { path: '/list-3d-models', component: List3dModels, name: 'list-3d-models'},
+    { path: '/view-3d-model/', props: true, component: View3dModel, name: 'view-3d-model'},
 ]
 
 const router = new VueRouter({

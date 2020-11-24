@@ -9,8 +9,10 @@ class MeshMaterial extends Model
 {
     use HasFactory;
 
+    protected $fillable = ['product_3d_model_id', 'material_name', 'display_name', 'texture_setting_wrap_s', 'texture_setting_wrap_t', 'texture_setting_repeat_u', 'texture_setting_repeat_v'];
+
     public function product3DModel(){
-        return $this->belongsTo(Product3DModel::class);
+        return $this->belongsTo(Product3dModel::class);
     }
 
     public function textureCategories(){

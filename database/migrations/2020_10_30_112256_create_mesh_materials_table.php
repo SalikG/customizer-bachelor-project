@@ -15,7 +15,7 @@ class CreateMeshMaterialsTable extends Migration
     {
         Schema::create('mesh_materials', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('product3_d_model_id')->constrained('product3_d_models')->onDelete('cascade');
+            $table->foreignId('product_3d_model_id')->constrained('product_3d_models')->onDelete('cascade');
             $table->string('material_name', 50)->nullable(false);
             $table->string('display_name', 50)->nullable(false);
             $table->string('texture_setting_wrap_s', 50)->nullable(false)->default('RepeatWrapping');
