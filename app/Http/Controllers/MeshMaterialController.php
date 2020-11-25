@@ -7,8 +7,8 @@ use Illuminate\Http\Request;
 
 class MeshMaterialController extends Controller
 {
-    public function getMeshMaterials(Request $request, $id){
-        $meshMaterials = Product3dModel::find($id)->meshMaterials()->get()->toArray();
+    public function getMeshMaterials(Request $request, $modelId){
+        $meshMaterials = Product3dModel::find($modelId)->meshMaterials()->with(['textureCategories', 'textureCategories.textures'])->get()->toArray();
         return response($meshMaterials, 200);
     }
 }
