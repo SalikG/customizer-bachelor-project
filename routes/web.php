@@ -3,6 +3,7 @@
 use App\Http\Controllers\FileUploadController;
 use App\Http\Controllers\MeshMaterialController;
 use App\Http\Controllers\Product3dModelController;
+use App\Http\Controllers\TextureCategoryController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -21,16 +22,20 @@ Route::get('/', function () {
     return view('app');
 });
 
-//USER AUTH
+// USER AUTH
 Route::post('/auth/register', [UserController::class, 'register']);
 Route::post('/auth/login', [UserController::class, 'login']);
 Route::post('/auth/logout', [UserController::class, 'logout']);
 
-//3d Model
+// 3d Model
 Route::middleware('auth:sanctum')->get('/models', [Product3dModelController::class, 'get3dModels']);
 
 // Mesh Material
 Route::middleware('auth:sanctum')->get('/models/{modelId}/materials', [MeshMaterialController::class, 'getMeshMaterials']);
+
+
+// Textures
+Route::middleware('auth:sanctum')->post('/models/{modelId}/materials/{materialId}/texture-categories', [TextureCategoryController::class, 'createTextureCategory']);
 
 
 

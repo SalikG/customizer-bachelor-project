@@ -19,13 +19,20 @@
                                  v-bind:data-target="'#materialBody' + material.id"
                                  aria-expanded="true"
                                  v-bind:aria-controls="'materialBody' + material.id">
-                                <input class="disabled-input display-name-input" disabled v-bind:value="material.display_name" />
+                                <input v-bind:id="'materialDisplayNameInput' + material.id"
+                                       v-on:keyup.enter="updateMaterialDisplayName(material.id)"
+                                       v-on:blur="updateMaterialDisplayName(material.id)"
+                                       class="disabled-input display-name-input"
+                                       disabled
+                                       v-bind:value="material.display_name" />
                                 <small id="materialName" class="text-muted">({{material.material_name}})</small>
                             </div>
                             <div class="dropright">
                                 <i class="fas fa-ellipsis-h" id="materialDropdownMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></i>
                                 <div class="dropdown-menu" aria-labelledby="materialDropdownMenu">
-                                    <button class="dropdown-item" type="button">Rename</button>
+                                    <button class="dropdown-item"
+                                            type="button"
+                                            v-on:click="handleMaterialRenameClick(material.id)">Rename</button>
                                     <button class="dropdown-item"
                                             v-on:click="handleSettingsOpenClick(material.id)"
                                             type="button"
@@ -57,7 +64,7 @@
                                             <p>{{texture.name}}</p>
                                         </div>
                                         <div class="add-texture col-4 col-sm-4 col-md-2 col-lg-2">
-                                            <div>
+                                            <div v-on:click="handleAddTextureClick(textureCategory.id)">
                                                 <p>+</p>
                                             </div>
                                         </div>
@@ -65,7 +72,13 @@
                                 </div>
                                 <div class="texture-category add-texture-category">
                                     <div class="header">
-                                        <input class="texture-category-name" type="text" placeholder="New texture category"/>
+                                        <input v-bind:id="'newTextureCategoryNameInput' + material.id"
+                                            class="texture-category-name"
+                                            type="text"
+                                            placeholder="New texture category"
+                                            v-model="newTextureCategoryName"
+                                            v-on:keyup.enter="createMaterialCategory(material.id)"
+                                            v-on:blur="newTextureCategoryName = ''"/>
                                     </div>
                                 </div>
                                 <div v-bind:id="'settings' + material.id" class="material-settings-container collapse">
@@ -101,16 +114,29 @@
 <!--                               v-bind:canvas-container-unique-id="'canvasContainer'"-->
 <!--                               v-bind:background="0xEEEEEE"></ModelRenderer>-->
             </div>
+
+            <div class="modal fade" id="addTextureModal" tabindex="-1" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered w-fit-content">
+                    <div class="modal-content w-auto">
+                        <div class="modal-body d-inline-flex justify-content-between">
+                            <button class="btn btn-secondary mr-2" type="button" data-dismiss="modal" v-on:click="handleNewTextureClick()">Upload new texture</button>
+                            <button class="btn btn-secondary ml-2" type="button">Choose existing texture</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <CreateTextureModal></CreateTextureModal>
         </div>
     </div>
 </template>
 
 <script>
     import ModelRenderer from "../components/ModelRenderer";
+    import CreateTextureModal from "../components/CreateTextureModal";
 
     export default {
         name: "View3dModel",
-        components: {ModelRenderer},
+        components: {ModelRenderer, CreateTextureModal},
         props: {
             model: {
                 type: Object,
@@ -128,7 +154,17 @@
         },
         data(){
             return {
+                newTextureCategoryName: '',
                 shownMaterialId: Number,
+                NewTextureData: {
+                    'textureCategoryId': Number,
+                    FormData: {
+                        name: String,
+                        description: String,
+                        textureFile: null,
+                        iconFile: null,
+                    }
+                },
                 meshMaterials: [{"id":15,"product_3d_model_id":10,"material_name":"Detail_FRONT_3812","display_name":"Detail_FRONT_3812","texture_setting_wrap_s":"RepeatWrapping","texture_setting_wrap_t":"RepeatWrapping","texture_setting_repeat_u":"1.00","texture_setting_repeat_v":"1.00","created_at":"2020-11-24T10:35:33.000000Z","updated_at":"2020-11-24T10:35:33.000000Z","texture_categories":[]},
                     {
                         "id":16,
@@ -170,9 +206,33 @@
             }
         },
         mounted() {
-            this.getModelMeshMaterialData();
+            const self = this;
+            self.getModelMeshMaterialData();
+            $('.modal').on('shown.bs.modal', () => {
+                self.$root.isModalOpen = true;
+            }).on('hidden.bs.modal', () => {
+                self.$root.isModalOpen = false;
+            })
         },
         methods: {
+            // create
+            createMaterialCategory(materialId){
+                const self = this;
+                let formData = new FormData();
+                formData.append('name', self.newTextureCategoryName);
+                axios.post('models/' + self.model.id + '/materials/' + materialId + '/texture-categories', formData)
+                    .then((res) => {
+                        if (res.status === 200){
+                            self.meshMaterials.find(material => material.id === materialId).texture_categories.push(JSON.parse(res.data.data));
+                            let newTextureCategoryNameInput = document.getElementById('newTextureCategoryNameInput' + materialId);
+                            newTextureCategoryNameInput.blur();
+                        }
+                    }).catch((err) => {
+                        console.log(err);
+                });
+            },
+
+            // get
             getModelMeshMaterialData(){
                 const self = this;
                 axios.get('/models/' + self.model.id + '/materials').then((res) => {
@@ -184,11 +244,19 @@
                 })
             },
 
+            // update
+            updateMaterialDisplayName(materialId){
+                let materialDisplayNameInput = document.getElementById('materialDisplayNameInput' + materialId);
+                materialDisplayNameInput.blur();
+                materialDisplayNameInput.disabled = true;
+            },
+
             getTextureScaling(materialId){
                 let textureScaling = parseFloat(this.meshMaterials.find(material => material.id === materialId).texture_setting_repeat_u);
                 return (1+(1-textureScaling))
             },
 
+            // click handlers
             handleMaterialHeaderClick(materialId){
                 // if true then clicked material is collapsing
                 if (this.shownMaterialId === materialId){
@@ -199,10 +267,27 @@
                     this.shownMaterialId = materialId;
                 }
             },
+
+            handleMaterialRenameClick(materialId){
+                let materialDisplayNameInput = document.getElementById('materialDisplayNameInput' + materialId);
+                materialDisplayNameInput.disabled = false
+                materialDisplayNameInput.focus()
+                materialDisplayNameInput.select()
+            },
+
             handleSettingsOpenClick(materialId){
                 this.shownMaterialId = materialId;
                 $('#materialBody' + materialId).collapse('show')
             },
+
+            handleAddTextureClick(textureCategoryId){
+                $("#addTextureModal").modal()
+                this.NewTextureData.textureCategoryId = textureCategoryId;
+            },
+
+            handleNewTextureClick(){
+                $("#createTextureModal").modal()
+            }
         }
     }
 </script>
@@ -319,6 +404,7 @@
                     .textures-container{
                         margin: 10px 0;
                         .texture{
+                            text-align: center;
                             img{
                                 width: 40px;
                                 height: 40px;
@@ -332,11 +418,13 @@
                         }
                         .add-texture{
                             div{
+                                margin: auto;
                                 width: 40px;
                                 height: 40px;
                                 border-radius: 5px;
                                 text-align: center;
                                 background-color: #E4E4E4;
+                                cursor: pointer;
                                 p{
                                     line-height: 38px;
                                     margin: 0;

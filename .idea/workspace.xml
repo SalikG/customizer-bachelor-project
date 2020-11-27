@@ -23,11 +23,16 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="a09fb66f-83a5-4a8c-bdc6-99822e720ecb" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/app/Http/Controllers/TextureCategoryController.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/Http/Requests/CreateTextureCategory.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/js/components/CreateTextureModal.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/MeshMaterialController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/MeshMaterialController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Models/TextureCategory.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/TextureCategory.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/css/app.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/css/app.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/public/js/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/app.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/app.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/js/pages/View3dModel.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/pages/View3dModel.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/app.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/app.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/sass/_globals.scss" beforeDir="false" afterPath="$PROJECT_DIR$/resources/sass/_globals.scss" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/web.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -285,7 +290,9 @@
       <workItem from="1606127152215" duration="20657000" />
       <workItem from="1606210671708" duration="5389000" />
       <workItem from="1606223482654" duration="6637000" />
-      <workItem from="1606301325214" duration="16224000" />
+      <workItem from="1606301325214" duration="16672000" />
+      <workItem from="1606475832216" duration="384000" />
+      <workItem from="1606476255213" duration="19405000" />
     </task>
     <servers />
   </component>
@@ -336,22 +343,22 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="548" y="186" key="FileChooserDialogImpl/0.0.1536.824@0.0.1536.824" timestamp="1604398776379" />
-    <state width="1493" height="51" key="GridCell.Tab.0.bottom" timestamp="1606304946283">
+    <state width="1493" height="117" key="GridCell.Tab.0.bottom" timestamp="1606480718091">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="51" key="GridCell.Tab.0.bottom/0.0.1536.824@0.0.1536.824" timestamp="1606304946283" />
-    <state width="1493" height="51" key="GridCell.Tab.0.center" timestamp="1606304946282">
+    <state width="1493" height="117" key="GridCell.Tab.0.bottom/0.0.1536.824@0.0.1536.824" timestamp="1606480718091" />
+    <state width="1493" height="117" key="GridCell.Tab.0.center" timestamp="1606480718091">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="51" key="GridCell.Tab.0.center/0.0.1536.824@0.0.1536.824" timestamp="1606304946282" />
-    <state width="1493" height="51" key="GridCell.Tab.0.left" timestamp="1606304946282">
+    <state width="1493" height="117" key="GridCell.Tab.0.center/0.0.1536.824@0.0.1536.824" timestamp="1606480718091" />
+    <state width="1493" height="117" key="GridCell.Tab.0.left" timestamp="1606480718091">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="51" key="GridCell.Tab.0.left/0.0.1536.824@0.0.1536.824" timestamp="1606304946282" />
-    <state width="1493" height="51" key="GridCell.Tab.0.right" timestamp="1606304946282">
+    <state width="1493" height="117" key="GridCell.Tab.0.left/0.0.1536.824@0.0.1536.824" timestamp="1606480718091" />
+    <state width="1493" height="117" key="GridCell.Tab.0.right" timestamp="1606480718091">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="51" key="GridCell.Tab.0.right/0.0.1536.824@0.0.1536.824" timestamp="1606304946282" />
+    <state width="1493" height="117" key="GridCell.Tab.0.right/0.0.1536.824@0.0.1536.824" timestamp="1606480718091" />
     <state x="604" y="332" key="NewPhpFileDialog" timestamp="1604418686447">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
@@ -364,13 +371,13 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="277" y="57" key="SettingsEditor/0.0.1536.824@0.0.1536.824" timestamp="1605602436043" />
-    <state x="425" y="187" key="run.anything.popup" timestamp="1606309646372">
+    <state x="425" y="187" key="run.anything.popup" timestamp="1606484432483">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="425" y="187" key="run.anything.popup/0.0.1536.824@0.0.1536.824" timestamp="1606309646372" />
-    <state x="431" y="145" width="672" height="678" key="search.everywhere.popup" timestamp="1606302307881">
+    <state x="425" y="187" key="run.anything.popup/0.0.1536.824@0.0.1536.824" timestamp="1606484432483" />
+    <state x="431" y="145" width="672" height="678" key="search.everywhere.popup" timestamp="1606493777354">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="431" y="145" width="672" height="678" key="search.everywhere.popup/0.0.1536.824@0.0.1536.824" timestamp="1606302307881" />
+    <state x="431" y="145" width="672" height="678" key="search.everywhere.popup/0.0.1536.824@0.0.1536.824" timestamp="1606493777354" />
   </component>
 </project>

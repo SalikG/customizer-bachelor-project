@@ -4617,6 +4617,16 @@ html {
   height: 100%;
 }
 
+.modal {
+  overflow-y: auto !important;
+}
+
+.w-fit-content {
+  width: -webkit-fit-content !important;
+  width: -moz-fit-content !important;
+  width: fit-content !important;
+}
+
 /*!
  * Bootstrap v4.5.3 (https://getbootstrap.com/)
  * Copyright 2011-2020 The Bootstrap Authors

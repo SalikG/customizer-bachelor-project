@@ -73,6 +73,12 @@ new Vue({
     data(){
         return {
             isLoggedIn: localStorage.getItem('isLoggedIn'),
+            isModalOpen: false,
+        }
+    },
+    watch: {
+        isModalOpen: function (val){
+            document.body.style.overflow = (val ? 'hidden': 'auto')
         }
     },
     template:
@@ -86,3 +92,5 @@ new Vue({
     store: store
 }).$mount('#app')
 });
+
+
