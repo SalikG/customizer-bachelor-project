@@ -16,7 +16,6 @@ axios.defaults.baseURL = 'http://127.0.0.1:8000'
 
 //Components
 import Header from './components/Header'
-import Index from './pages/Index'
 import Login from './pages/auth/Login'
 import Register from './pages/auth/Register'
 import Create3dModel from './pages/Create3dModel'
@@ -35,9 +34,9 @@ const store = new Vuex.Store({
 
 //Routes
 const routes = [
-    { path: '/', component: Index, meta: {allowAnonymous: true} },
+    { path: '/', component: Login, meta: {allowAnonymous: true} },
     { path: '/login', component: Login, name: 'login', meta: {allowAnonymous: true} },
-    { path: '/register', component: Register, meta: {allowAnonymous: true} },
+    { path: '/register', component: Register, name: 'register',  meta: {allowAnonymous: true} },
     { path: '/create-3d-model', component: Create3dModel, name: 'create-3d-model'},
     { path: '/list-3d-models', component: List3dModels, name: 'list-3d-models'},
     { path: '/view-3d-model/', props: true, component: View3dModel, name: 'view-3d-model'},

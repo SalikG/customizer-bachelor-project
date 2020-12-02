@@ -4,6 +4,7 @@ use App\Http\Controllers\FileUploadController;
 use App\Http\Controllers\MeshMaterialController;
 use App\Http\Controllers\Product3dModelController;
 use App\Http\Controllers\TextureCategoryController;
+use App\Http\Controllers\TextureController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -29,13 +30,18 @@ Route::post('/auth/logout', [UserController::class, 'logout']);
 
 // 3d Model
 Route::middleware('auth:sanctum')->get('/models', [Product3dModelController::class, 'get3dModels']);
+Route::middleware('auth:sanctum')->post('/models/{modelId}', [Product3dModelController::class, 'updateModel']);
 
 // Mesh Material
 Route::middleware('auth:sanctum')->get('/models/{modelId}/materials', [MeshMaterialController::class, 'getMeshMaterials']);
+Route::middleware('auth:sanctum')->post('/models/{modelId}/materials/{materialId}', [MeshMaterialController::class, 'updateMaterial']);
 
+// Textures categories
+Route::middleware('auth:sanctum')->post('/models/{modelId}/materials/{materialId}/texture-categories', [TextureCategoryController::class, 'createTextureCategory']);
+Route::middleware('auth:sanctum')->post('/models/{modelId}/materials/{materialId}/texture-categories/{textureCategoryId}', [TextureCategoryController::class, 'updateTextureCategory']);
 
 // Textures
-Route::middleware('auth:sanctum')->post('/models/{modelId}/materials/{materialId}/texture-categories', [TextureCategoryController::class, 'createTextureCategory']);
+Route::middleware('auth:sanctum')->post('/models/{modelId}/materials/{materialId}/texture-categories/{textureCategoryId}/textures', [TextureController::class, 'createTexture']);
 
 
 

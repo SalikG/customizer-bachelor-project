@@ -15,7 +15,6 @@ class CreateTexturesTable extends Migration
     {
         Schema::create('textures', function (Blueprint $table) {
             $table->id();
-            $table->uuid('uuid');
             $table->string('name', 50)->nullable(false);
             $table->string('description', 255)->nullable(true);
             $table->string('file_path', 255)->nullable(false);

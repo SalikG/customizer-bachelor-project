@@ -12,11 +12,19 @@ class TextureCategoryController extends Controller
     public function createTextureCategory(CreateTextureCategory $request, $modelId, $materialId){
         $validatedData = $request->validated();
         $result =  MeshMaterial::find($materialId)->textureCategories()->create(['name' => $validatedData['name']]);
-//        TextureCategory::create([
-//            'name'=> $validatedData['name']
-//        ]);
         $result = TextureCategory::find($result->id)->load(['textures'])->toJson();
-//            MeshMaterial::find($result->id)->with(['textures'])->get()->toArray());
         return response(['message' => 'success', 'data' => $result], 200);
+    }
+
+    public function updateTextureCategory(CreateTextureCategory $request, $modelId, $materialId, $textureCategoryId){
+        $validatedData = $request->validated();
+        $textureCategory = TextureCategory::find($textureCategoryId);
+        $textureCategory->name = $validatedData['name'];
+        $saved = $textureCategory->save();
+
+        if ($saved){
+            return response(['message' => 'success'], 200);
+        }
+        return response(['message' => 'SERVER ERROR'], 500);
     }
 }

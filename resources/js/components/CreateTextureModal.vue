@@ -30,7 +30,7 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-primary">Submit</button>
+                    <button type="button" v-on:click="createNewTexture()" class="btn btn-primary">Submit</button>
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                 </div>
             </div>
@@ -41,6 +41,17 @@
 <script>
 export default {
     name: "CreateTextureModal",
+    props: {
+        modelId: {
+            type: Number,
+        },
+        materialId: {
+            type: Number,
+        },
+        textureCategoryId: {
+            type: Number,
+        }
+    },
     data() {
         return {
             textureFileName: '',
@@ -54,13 +65,32 @@ export default {
         }
     },
     methods: {
+        createNewTexture(){
+            const self = this;
+            let formData = new FormData();
+            formData.append('name', self.FormData.name);
+            formData.append('description', self.FormData.description);
+            formData.append('textureFile', self.FormData.textureFile);
+            formData.append('iconFile', self.FormData.iconFile);
+            axios.post('models/' + self.modelId + '/materials/' + self.materialId + '/texture-categories/' + self.textureCategoryId + '/textures', formData)
+                .then((res) => {
+                    if (res.status === 200){
+                        console.log('EMITTER: ' + 'materialId ' + self.materialId, 'textureCategoryId ' + self.textureCategoryId, 'texture ' + JSON.parse(res.data.data))
+                        self.$emit('newTexture', self.materialId, self.textureCategoryId, JSON.parse(res.data.data));
+                        $('#createTextureModal').modal('hide');
+                    }
+                }).catch((err) => {
+                    console.log(err);
+            });
+        },
+
         handleIconFileSelect(){
             this.FormData.iconFile = this.$refs.iconFile.files[0];
-            this.iconFileName = this.FormData.iconFile.name.replace(/\.[^/.]+$/, "");
+            this.iconFileName = this.FormData.iconFile.name;
         },
         handleTextureFileSelect(){
             this.FormData.textureFile = this.$refs.textureFile.files[0];
-            this.textureFileName = this.FormData.textureFile.name.replace(/\.[^/.]+$/, "");
+            this.textureFileName = this.FormData.textureFile.name;
         }
     }
 }
