@@ -50,7 +50,7 @@
                                v-model="textureCategory.name">
                     </div>
                     <div class="textures-container row">
-                        <div class="texture col-4 col-sm-4 col-md-2 col-lg-2" v-for="texture in textureCategory.textures">
+                        <div class="texture col-4 col-sm-4 col-md-2 col-lg-2" v-for="texture in textureCategory.textures" v-on:click="$emit('applyTextureToModel', material.material_name, texture)">
                             <img v-bind:src="texture.icon_path" alt="icon not found">
                             <p>{{texture.name}}</p>
                         </div>

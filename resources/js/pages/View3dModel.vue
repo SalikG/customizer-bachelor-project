@@ -22,7 +22,8 @@
                               v-bind:model-id="model.id"
                               @focusedMaterialChanged="focusedMaterialChanged"
                               @focusedTextureCategoryChanged="focusedTextureCategoryChanged"
-                              @newTextureCategory="newTextureCategory"></Material>
+                              @newTextureCategory="newTextureCategory"
+                              @applyTextureToModel="applyTextureToModel"></Material>
 <!--                        <h3>Customizable</h3>-->
                     <h3 class="material-category-header customizable">Customizable</h3>
                     <Material class="customizable"
@@ -34,7 +35,8 @@
                               v-bind:model-id="model.id"
                               @focusedMaterialChanged="focusedMaterialChanged"
                               @focusedTextureCategoryChanged="focusedTextureCategoryChanged"
-                              @newTextureCategory="newTextureCategory"></Material>
+                              @newTextureCategory="newTextureCategory"
+                              @applyTextureToModel="applyTextureToModel"></Material>
 <!--                        <h3>Fixed (one texture)</h3>-->
                     <h3 class="material-category-header fixed-texture">Fixed (one texture)</h3>
                     <Material class="fixed-texture"
@@ -46,14 +48,16 @@
                               v-bind:model-id="model.id"
                               @focusedMaterialChanged="focusedMaterialChanged"
                               @focusedTextureCategoryChanged="focusedTextureCategoryChanged"
-                              @newTextureCategory="newTextureCategory"></Material>
+                              @newTextureCategory="newTextureCategory"
+                              @applyTextureToModel="applyTextureToModel"></Material>
                 </div>
             </div>
             <div id="rightPanel" class="col">
-<!--                <ModelRenderer ref="modelRenderer"-->
-<!--                               v-bind:model-path="model.file_path"-->
-<!--                               v-bind:canvas-container-unique-id="'canvasContainer'"-->
-<!--                               v-bind:background="0xEEEEEE"></ModelRenderer>-->
+                <ModelRenderer ref="modelRenderer"
+                               v-bind:model-path="model.file_path"
+                               v-bind:canvas-container-unique-id="'canvasContainer'"
+                               v-bind:background="0xEEEEEE"
+                               v-bind:texture-to-apply-by-material-name="textureToApplyByMaterialName"></ModelRenderer>
             </div>
 
             <div class="modal fade" id="addTextureModal" tabindex="-1" aria-hidden="true">
@@ -74,7 +78,7 @@
                             <h5 class="font-weight-bold modal-title">Textures</h5>
                         </div>
                         <div class="modal-body">
-                            <TextureList @textureClicked="textureClicked" v-bind:textures="filteredExistingTextures"></TextureList>
+                            <TextureList @addExistingTextureClicked="addExistingTextureClicked" v-bind:textures="filteredExistingTextures"></TextureList>
                         </div>
                     </div>
                 </div>
@@ -113,6 +117,7 @@ export default {
                 focusedMaterialId: null,
                 focusedTextureCategoryId: null,
                 existingTextures: [],
+                textureToApplyByMaterialName: {},
                 meshMaterials: [],
                     // {"id":15,"product_3d_model_id":10,"material_name":"Detail_FRONT_3812","display_name":"Detail_FRONT_3812","texture_setting_wrap_s":"RepeatWrapping","texture_setting_wrap_t":"RepeatWrapping","texture_setting_repeat_u":"1.00","texture_setting_repeat_v":"1.00","created_at":"2020-11-24T10:35:33.000000Z","updated_at":"2020-11-24T10:35:33.000000Z","texture_categories":[]},
                     // {
@@ -306,8 +311,14 @@ export default {
                 this.focusedTextureCategoryId = textureCategoryId;
             },
 
-            textureClicked(texture){
+            addExistingTextureClicked(texture){
                 this.addExistingTexture(texture)
+            },
+
+            applyTextureToModel(materialName, texture){
+                let result = {};
+                result[materialName] = texture;
+                this.textureToApplyByMaterialName = result;
             },
             //</editor-fold>
 

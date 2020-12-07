@@ -29,7 +29,12 @@
             background: {
                 type: Number,
                 required: true
-            }
+            },
+            textureToApplyByMaterialName: {
+                type: Object,
+                required: false,
+                default: {},
+            },
         },
         data(){
             return {
@@ -46,6 +51,7 @@
                 maxHeight: 0,
                 baseColor: new THREE.Color(0x333333),
                 highlightColor: new THREE.Color(0x0077ff),
+                materials: [],
             }
         },
         mounted: function (){
@@ -55,11 +61,17 @@
             }
             this.animate();
         },
+        destroyed() {
+            window.removeEventListener('resize',  this.handleResize)
+        },
         watch: {
             modelPath: function (newPath, oldPath){
-                console.log(oldPath)
-                console.log(newPath)
                 this.update3dModel(newPath);
+            },
+            textureToApplyByMaterialName: function(newValue, oldValue){
+                for (const [materialName, texture] of Object.entries(newValue)) {
+                    this.applyTexture(materialName, texture);
+                }
             }
         },
         computed: {
@@ -70,10 +82,50 @@
                 return [this.isUploading3dModel, this.isLoading3dModel].some(bool => bool === true);
             }
         },
-        destroyed() {
-            window.removeEventListener('resize',  this.handleResize)
-        },
         methods: {
+            applyTexture(materialName, texture){
+                let model = this.scene.getObjectByName("model")
+
+                let textureLoader = new THREE.TextureLoader();
+                let loadedTexture = textureLoader.load(texture.file_path, function ( texture ) {
+                        // let texture = textureLoader.load('/files/textures/Herringbone_base_color.png', function ( texture ) {
+                        // in this example we create the material when the texture is loaded
+                        texture.wrapS = THREE.RepeatWrapping;
+                        texture.wrapT = THREE.RepeatWrapping;
+                        texture.repeat.set(0.01, 0.01);
+                        // texture.repeat.set(1, 1);
+                    },
+                    // onProgress callback currently not supported
+                    undefined,
+                    // onError callback
+                    function ( err ) {
+                        console.error( err );
+                    });
+
+                // For any meshes in the model, add our texture to specific material by name.
+                model.traverse( function ( node ) {
+                    if ( node.isMesh ) {
+                        //material can be array of materials or one object there for 2 different ways to apply texture
+                        if (Array.isArray(node.material)){
+                            for (const [key, material] of Object.entries(node.material)) {
+                                if (material.name === materialName){
+                                    material.color = new THREE.Color(0xffffff);
+                                    material.map = loadedTexture
+                                    material.needsUpdate = true;
+                                }
+                            }
+                        }
+                        else {
+                            if (node.material.name === materialName){
+                                node.material.color = new THREE.Color(0xffffff);
+                                node.material.map = texture
+                                node.material.needsUpdate = true;
+                            }
+                        }
+                    }
+                })
+            },
+
             init(){
                 this.maxWidth = document.getElementById(this.canvasContainerUniqueId).clientWidth;
                 this.maxHeight = this.maxWidth - 100;
@@ -126,6 +178,7 @@
                                 }
                             }
                         });
+                        object.name = "model"
                         self.scene.add( object );
                         self.setLighting(object);
                         self.$emit('rendered-new-3d-model', object);
