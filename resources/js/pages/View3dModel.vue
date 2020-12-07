@@ -96,15 +96,15 @@ export default {
             model: {
                 type: Object,
                 required: true,
-                default: {
-                    "id":5,
-                    "company_id":1,
-                    "name":"Base cap",
-                    "file_path":"storage/96a3e074-3c19-4ef1-8779-0fd687ba6861/3dModels/920df18f-b9b8-4cfa-96b8-d00a5e2e2d9c.obj",
-                    "display_img_path":"storage/96a3e074-3c19-4ef1-8779-0fd687ba6861/3dModelDisplayImages//920df262-09ee-43e2-afdb-b093d52398dc.png",
-                    "created_at":"2020-11-20T15:26:27.000000Z",
-                    "updated_at":"2020-11-20T15:26:27.000000Z"
-                }
+                // default: {
+                //     "id":5,
+                //     "company_id":1,
+                //     "name":"Base cap",
+                //     "file_path":"storage/96a3e074-3c19-4ef1-8779-0fd687ba6861/3dModels/920df18f-b9b8-4cfa-96b8-d00a5e2e2d9c.obj",
+                //     "display_img_path":"storage/96a3e074-3c19-4ef1-8779-0fd687ba6861/3dModelDisplayImages//920df262-09ee-43e2-afdb-b093d52398dc.png",
+                //     "created_at":"2020-11-20T15:26:27.000000Z",
+                //     "updated_at":"2020-11-20T15:26:27.000000Z"
+                // }
             }
         },
         data(){
@@ -113,43 +113,44 @@ export default {
                 focusedMaterialId: null,
                 focusedTextureCategoryId: null,
                 existingTextures: [],
-                meshMaterials: [{"id":15,"product_3d_model_id":10,"material_name":"Detail_FRONT_3812","display_name":"Detail_FRONT_3812","texture_setting_wrap_s":"RepeatWrapping","texture_setting_wrap_t":"RepeatWrapping","texture_setting_repeat_u":"1.00","texture_setting_repeat_v":"1.00","created_at":"2020-11-24T10:35:33.000000Z","updated_at":"2020-11-24T10:35:33.000000Z","texture_categories":[]},
-                    {
-                        "id":16,
-                        "product_3d_model_id":10,
-                        "material_name":"FABRIC 2_FRONT_3789",
-                        "display_name":"FABRIC 2_FRONT_3789",
-                        "texture_setting_wrap_s":"RepeatWrapping",
-                        "texture_setting_wrap_t":"RepeatWrapping",
-                        "texture_setting_repeat_u":"1.00",
-                        "texture_setting_repeat_v":"1.00",
-                        "created_at":"2020-11-24T10:35:33.000000Z",
-                        "updated_at":"2020-11-24T10:35:33.000000Z",
-                        "texture_categories":
-                            [
-                                {
-                                    "id":1,
-                                    "name":"test",
-                                    "created_at":null,
-                                    "updated_at":null,
-                                    "pivot":{"mesh_material_id":16,"texture_category_id":1},
-                                    "textures":
-                                        [
-                                            {"id":1,
-                                                "uuid":"9ed86e80-41a0-48da-9455-5b1008bc018d",
-                                                "name":"testerTexture",
-                                                "description":"bla blabblalsgofmh adsgh",
-                                                "file_path":"test not working",
-                                                "icon_path":"test not working",
-                                                "created_at":null,
-                                                "updated_at":null,
-                                                "pivot":{"texture_category_id":1,"texture_id":1}
-                                            }
-                                        ]
-                                }
-                            ]
-                    },
-                    {"id":17,"product_3d_model_id":10,"material_name":"FABRIC 2_BACK_3789","display_name":"FABRIC 2_BACK_3789","texture_setting_wrap_s":"RepeatWrapping","texture_setting_wrap_t":"RepeatWrapping","texture_setting_repeat_u":"1.00","texture_setting_repeat_v":"1.00","created_at":"2020-11-24T10:35:33.000000Z","updated_at":"2020-11-24T10:35:33.000000Z","texture_categories":[]},{"id":18,"product_3d_model_id":10,"material_name":"Brim _FRONT_3800","display_name":"Brim _FRONT_3800","texture_setting_wrap_s":"RepeatWrapping","texture_setting_wrap_t":"RepeatWrapping","texture_setting_repeat_u":"1.00","texture_setting_repeat_v":"1.00","created_at":"2020-11-24T10:35:33.000000Z","updated_at":"2020-11-24T10:35:33.000000Z","texture_categories":[]},{"id":19,"product_3d_model_id":10,"material_name":"Brim _BACK_3800","display_name":"Brim _BACK_3800","texture_setting_wrap_s":"RepeatWrapping","texture_setting_wrap_t":"RepeatWrapping","texture_setting_repeat_u":"1.00","texture_setting_repeat_v":"1.00","created_at":"2020-11-24T10:35:33.000000Z","updated_at":"2020-11-24T10:35:33.000000Z","texture_categories":[]},{"id":20,"product_3d_model_id":10,"material_name":"Material79508","display_name":"Material79508","texture_setting_wrap_s":"RepeatWrapping","texture_setting_wrap_t":"RepeatWrapping","texture_setting_repeat_u":"1.00","texture_setting_repeat_v":"1.00","created_at":"2020-11-24T10:35:33.000000Z","updated_at":"2020-11-24T10:35:33.000000Z","texture_categories":[]},{"id":21,"product_3d_model_id":10,"material_name":"Buckle_FRONT_3806","display_name":"Buckle_FRONT_3806","texture_setting_wrap_s":"RepeatWrapping","texture_setting_wrap_t":"RepeatWrapping","texture_setting_repeat_u":"1.00","texture_setting_repeat_v":"1.00","created_at":"2020-11-24T10:35:33.000000Z","updated_at":"2020-11-24T10:35:33.000000Z","texture_categories":[]},{"id":22,"product_3d_model_id":10,"material_name":"Buckle_BACK_3806","display_name":"Buckle_BACK_3806","texture_setting_wrap_s":"RepeatWrapping","texture_setting_wrap_t":"RepeatWrapping","texture_setting_repeat_u":"1.00","texture_setting_repeat_v":"1.00","created_at":"2020-11-24T10:35:33.000000Z","updated_at":"2020-11-24T10:35:33.000000Z","texture_categories":[]},{"id":23,"product_3d_model_id":10,"material_name":"Material1282830","display_name":"Material1282830","texture_setting_wrap_s":"RepeatWrapping","texture_setting_wrap_t":"RepeatWrapping","texture_setting_repeat_u":"1.00","texture_setting_repeat_v":"1.00","created_at":"2020-11-24T10:35:33.000000Z","updated_at":"2020-11-24T10:35:33.000000Z","texture_categories":[]},{"id":24,"product_3d_model_id":10,"material_name":"Band_FRONT_3817","display_name":"Band_FRONT_3817","texture_setting_wrap_s":"RepeatWrapping","texture_setting_wrap_t":"RepeatWrapping","texture_setting_repeat_u":"1.00","texture_setting_repeat_v":"1.00","created_at":"2020-11-24T10:35:33.000000Z","updated_at":"2020-11-24T10:35:33.000000Z","texture_categories":[]},{"id":25,"product_3d_model_id":10,"material_name":"Lining_FRONT_3822","display_name":"Lining_FRONT_3822","texture_setting_wrap_s":"RepeatWrapping","texture_setting_wrap_t":"RepeatWrapping","texture_setting_repeat_u":"1.00","texture_setting_repeat_v":"1.00","created_at":"2020-11-24T10:35:33.000000Z","updated_at":"2020-11-24T10:35:33.000000Z","texture_categories":[]},{"id":26,"product_3d_model_id":10,"material_name":"Material4295","display_name":"Material4295","texture_setting_wrap_s":"RepeatWrapping","texture_setting_wrap_t":"RepeatWrapping","texture_setting_repeat_u":"1.00","texture_setting_repeat_v":"1.00","created_at":"2020-11-24T10:35:33.000000Z","updated_at":"2020-11-24T10:35:33.000000Z","texture_categories":[]},{"id":27,"product_3d_model_id":10,"material_name":"Material4414","display_name":"Material4414","texture_setting_wrap_s":"RepeatWrapping","texture_setting_wrap_t":"RepeatWrapping","texture_setting_repeat_u":"1.00","texture_setting_repeat_v":"1.00","created_at":"2020-11-24T10:35:33.000000Z","updated_at":"2020-11-24T10:35:33.000000Z","texture_categories":[]},{"id":28,"product_3d_model_id":10,"material_name":"Material4177","display_name":"Material4177","texture_setting_wrap_s":"RepeatWrapping","texture_setting_wrap_t":"RepeatWrapping","texture_setting_repeat_u":"1.00","texture_setting_repeat_v":"1.00","created_at":"2020-11-24T10:35:33.000000Z","updated_at":"2020-11-24T10:35:33.000000Z","texture_categories":[]}]
+                meshMaterials: [],
+                    // {"id":15,"product_3d_model_id":10,"material_name":"Detail_FRONT_3812","display_name":"Detail_FRONT_3812","texture_setting_wrap_s":"RepeatWrapping","texture_setting_wrap_t":"RepeatWrapping","texture_setting_repeat_u":"1.00","texture_setting_repeat_v":"1.00","created_at":"2020-11-24T10:35:33.000000Z","updated_at":"2020-11-24T10:35:33.000000Z","texture_categories":[]},
+                    // {
+                    //     "id":16,
+                    //     "product_3d_model_id":10,
+                    //     "material_name":"FABRIC 2_FRONT_3789",
+                    //     "display_name":"FABRIC 2_FRONT_3789",
+                    //     "texture_setting_wrap_s":"RepeatWrapping",
+                    //     "texture_setting_wrap_t":"RepeatWrapping",
+                    //     "texture_setting_repeat_u":"1.00",
+                    //     "texture_setting_repeat_v":"1.00",
+                    //     "created_at":"2020-11-24T10:35:33.000000Z",
+                    //     "updated_at":"2020-11-24T10:35:33.000000Z",
+                    //     "texture_categories":
+                    //         [
+                    //             {
+                    //                 "id":1,
+                    //                 "name":"test",
+                    //                 "created_at":null,
+                    //                 "updated_at":null,
+                    //                 "pivot":{"mesh_material_id":16,"texture_category_id":1},
+                    //                 "textures":
+                    //                     [
+                    //                         {"id":1,
+                    //                             "uuid":"9ed86e80-41a0-48da-9455-5b1008bc018d",
+                    //                             "name":"testerTexture",
+                    //                             "description":"bla blabblalsgofmh adsgh",
+                    //                             "file_path":"test not working",
+                    //                             "icon_path":"test not working",
+                    //                             "created_at":null,
+                    //                             "updated_at":null,
+                    //                             "pivot":{"texture_category_id":1,"texture_id":1}
+                    //                         }
+                    //                     ]
+                    //             }
+                    //         ]
+                    // },
+                    // {"id":17,"product_3d_model_id":10,"material_name":"FABRIC 2_BACK_3789","display_name":"FABRIC 2_BACK_3789","texture_setting_wrap_s":"RepeatWrapping","texture_setting_wrap_t":"RepeatWrapping","texture_setting_repeat_u":"1.00","texture_setting_repeat_v":"1.00","created_at":"2020-11-24T10:35:33.000000Z","updated_at":"2020-11-24T10:35:33.000000Z","texture_categories":[]},{"id":18,"product_3d_model_id":10,"material_name":"Brim _FRONT_3800","display_name":"Brim _FRONT_3800","texture_setting_wrap_s":"RepeatWrapping","texture_setting_wrap_t":"RepeatWrapping","texture_setting_repeat_u":"1.00","texture_setting_repeat_v":"1.00","created_at":"2020-11-24T10:35:33.000000Z","updated_at":"2020-11-24T10:35:33.000000Z","texture_categories":[]},{"id":19,"product_3d_model_id":10,"material_name":"Brim _BACK_3800","display_name":"Brim _BACK_3800","texture_setting_wrap_s":"RepeatWrapping","texture_setting_wrap_t":"RepeatWrapping","texture_setting_repeat_u":"1.00","texture_setting_repeat_v":"1.00","created_at":"2020-11-24T10:35:33.000000Z","updated_at":"2020-11-24T10:35:33.000000Z","texture_categories":[]},{"id":20,"product_3d_model_id":10,"material_name":"Material79508","display_name":"Material79508","texture_setting_wrap_s":"RepeatWrapping","texture_setting_wrap_t":"RepeatWrapping","texture_setting_repeat_u":"1.00","texture_setting_repeat_v":"1.00","created_at":"2020-11-24T10:35:33.000000Z","updated_at":"2020-11-24T10:35:33.000000Z","texture_categories":[]},{"id":21,"product_3d_model_id":10,"material_name":"Buckle_FRONT_3806","display_name":"Buckle_FRONT_3806","texture_setting_wrap_s":"RepeatWrapping","texture_setting_wrap_t":"RepeatWrapping","texture_setting_repeat_u":"1.00","texture_setting_repeat_v":"1.00","created_at":"2020-11-24T10:35:33.000000Z","updated_at":"2020-11-24T10:35:33.000000Z","texture_categories":[]},{"id":22,"product_3d_model_id":10,"material_name":"Buckle_BACK_3806","display_name":"Buckle_BACK_3806","texture_setting_wrap_s":"RepeatWrapping","texture_setting_wrap_t":"RepeatWrapping","texture_setting_repeat_u":"1.00","texture_setting_repeat_v":"1.00","created_at":"2020-11-24T10:35:33.000000Z","updated_at":"2020-11-24T10:35:33.000000Z","texture_categories":[]},{"id":23,"product_3d_model_id":10,"material_name":"Material1282830","display_name":"Material1282830","texture_setting_wrap_s":"RepeatWrapping","texture_setting_wrap_t":"RepeatWrapping","texture_setting_repeat_u":"1.00","texture_setting_repeat_v":"1.00","created_at":"2020-11-24T10:35:33.000000Z","updated_at":"2020-11-24T10:35:33.000000Z","texture_categories":[]},{"id":24,"product_3d_model_id":10,"material_name":"Band_FRONT_3817","display_name":"Band_FRONT_3817","texture_setting_wrap_s":"RepeatWrapping","texture_setting_wrap_t":"RepeatWrapping","texture_setting_repeat_u":"1.00","texture_setting_repeat_v":"1.00","created_at":"2020-11-24T10:35:33.000000Z","updated_at":"2020-11-24T10:35:33.000000Z","texture_categories":[]},{"id":25,"product_3d_model_id":10,"material_name":"Lining_FRONT_3822","display_name":"Lining_FRONT_3822","texture_setting_wrap_s":"RepeatWrapping","texture_setting_wrap_t":"RepeatWrapping","texture_setting_repeat_u":"1.00","texture_setting_repeat_v":"1.00","created_at":"2020-11-24T10:35:33.000000Z","updated_at":"2020-11-24T10:35:33.000000Z","texture_categories":[]},{"id":26,"product_3d_model_id":10,"material_name":"Material4295","display_name":"Material4295","texture_setting_wrap_s":"RepeatWrapping","texture_setting_wrap_t":"RepeatWrapping","texture_setting_repeat_u":"1.00","texture_setting_repeat_v":"1.00","created_at":"2020-11-24T10:35:33.000000Z","updated_at":"2020-11-24T10:35:33.000000Z","texture_categories":[]},{"id":27,"product_3d_model_id":10,"material_name":"Material4414","display_name":"Material4414","texture_setting_wrap_s":"RepeatWrapping","texture_setting_wrap_t":"RepeatWrapping","texture_setting_repeat_u":"1.00","texture_setting_repeat_v":"1.00","created_at":"2020-11-24T10:35:33.000000Z","updated_at":"2020-11-24T10:35:33.000000Z","texture_categories":[]},{"id":28,"product_3d_model_id":10,"material_name":"Material4177","display_name":"Material4177","texture_setting_wrap_s":"RepeatWrapping","texture_setting_wrap_t":"RepeatWrapping","texture_setting_repeat_u":"1.00","texture_setting_repeat_v":"1.00","created_at":"2020-11-24T10:35:33.000000Z","updated_at":"2020-11-24T10:35:33.000000Z","texture_categories":[]}]
             }
         },
         mounted() {
