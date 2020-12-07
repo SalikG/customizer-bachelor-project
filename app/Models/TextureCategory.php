@@ -9,6 +9,8 @@ class TextureCategory extends Model
 {
     use HasFactory;
 
+    protected $fillable = ['name'];
+
     public function textures()
     {
         return $this->belongsToMany(Texture::class, 'texture_category_items');

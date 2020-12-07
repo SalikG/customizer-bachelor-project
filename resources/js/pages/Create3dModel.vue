@@ -38,7 +38,7 @@
                 </div>
                 <div id="materialList" class="list-group">
                     <label for="materialList">Materials <small>(click to highlight)</small>:</label>
-                    <button v-for="material in materialNames" v-bind:id="material" class="list-group-item list-group-item-action" v-on:click="highlightSelectedMaterial($event)">{{material}}</button>
+                    <button v-for="material in FormData.materialNames" v-bind:id="material" class="list-group-item list-group-item-action" v-on:click="highlightSelectedMaterial($event)">{{material}}</button>
                 </div>
             </div>
         </div>
@@ -73,7 +73,7 @@
                         <router-link :to="{name: 'create-3d-model', query: { reloadId: reloadId}}">
                             <button type="button" class="btn btn-primary" data-dismiss="modal">Add another 3d model</button>
                         </router-link>
-                        <router-link :to="{name: 'list-3d-models'}">
+                        <router-link :to="{name: 'models'}">
                             <button type="button" class="btn btn-primary" data-dismiss="modal">Go to overview</button>
                         </router-link>
                     </div>
@@ -100,12 +100,12 @@ export default {
                     displayName: '',
                     currentFilePath: '',
                     displayImgFile: '',
+                    materialNames: [],
                 },
                 uploadProgress: 0,
                 uploadProgressClass: 'collapsed',
                 isLoadedControllerClass: 'd-none',
                 model3d: Object,
-                materialNames: [],
                 modelFileValidationErrors: [],
                 displayImgFileValidationErrors: [],
                 serverValidationErrors: [],
@@ -152,14 +152,14 @@ export default {
             },
 
             addToMaterialIds(value){
-                if(this.materialNames.indexOf(value) === -1){
-                    this.materialNames.push(value);
+                if(this.FormData.materialNames.indexOf(value) === -1){
+                    this.FormData.materialNames.push(value);
                 }
             },
 
             resetInfoContainer(){
                 const self = this;
-                self.materialNames = [];
+                self.FormData.materialNames = [];
                 self.infoContainerCollapse()
             },
 
@@ -204,6 +204,7 @@ export default {
                 formData.append('name', self.FormData.displayName);
                 formData.append('tempFilePath', self.FormData.currentFilePath);
                 formData.append('displayImgFile', self.FormData.displayImgFile);
+                formData.append('meshMaterialNames', JSON.stringify(self.FormData.materialNames));
 
                 let config = {
                     headers: {

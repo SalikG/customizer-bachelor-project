@@ -47,7 +47,11 @@ class User extends Authenticatable
     }
 
     public function product3dModels(){
-        return Product3DModel::select('*')
+        return Product3dModel::select('*')
             ->where('company_id', auth()->user()->company_id);
+    }
+
+    public function textures(){
+        return Texture::select('*')->where('company_id', auth()->user()->company_id);
     }
 }

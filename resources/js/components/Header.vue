@@ -9,9 +9,7 @@
             <!-- use router-link component for navigation. -->
             <!-- specify the link by passing the `to` prop. -->
             <!-- `<router-link>` will be rendered as an `<a>` tag by default -->
-            <li class="nav-item"><router-link class="nav-link" to="/">Home</router-link></li>
-            <li class="nav-item" v-if="authenticated"><router-link class="nav-link" to="/create-3d-model">New model</router-link></li>
-            <li class="nav-item" v-if="authenticated"><router-link class="nav-link" to="/list-3d-models">Your models</router-link></li>
+            <li class="nav-item" v-if="authenticated"><router-link class="nav-link" to="/models">Models</router-link></li>
         </ul>
         <ul class="navbar-nav ml-auto mr-3">
             <li class="nav-item float-right" v-if="!authenticated"><router-link class="nav-link" to="/register">Register</router-link></li>

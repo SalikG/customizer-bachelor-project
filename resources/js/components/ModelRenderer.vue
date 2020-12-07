@@ -12,7 +12,25 @@
 
     export default {
         name: "ModelRenderer",
-        props: ['modelPath', 'isUploading3dModel', 'canvasContainerUniqueId', 'background'],
+        props: {
+            modelPath: {
+                type: String,
+                required: true
+            },
+            isUploading3dModel: {
+                type: Boolean,
+                required: false,
+                default: () => {return false}
+            },
+            canvasContainerUniqueId: {
+                type: String,
+                required: true
+            },
+            background: {
+                type: Number,
+                required: true
+            }
+        },
         data(){
             return {
                 loading3dModelProgress: 0,
@@ -39,6 +57,8 @@
         },
         watch: {
             modelPath: function (newPath, oldPath){
+                console.log(oldPath)
+                console.log(newPath)
                 this.update3dModel(newPath);
             }
         },

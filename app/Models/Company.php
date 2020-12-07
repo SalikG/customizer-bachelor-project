@@ -22,7 +22,7 @@ class Company extends Model
     }
 
     public function product3DModels(){
-        return $this->hasMany(Product3DModel::class);
+        return $this->hasMany(Product3dModel::class);
     }
 
     protected static function boot()
