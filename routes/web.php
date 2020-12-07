@@ -42,6 +42,8 @@ Route::middleware('auth:sanctum')->post('/models/{modelId}/materials/{materialId
 
 // Textures
 Route::middleware('auth:sanctum')->post('/models/{modelId}/materials/{materialId}/texture-categories/{textureCategoryId}/textures', [TextureController::class, 'createTexture']);
+Route::middleware('auth:sanctum')->post('/models/{modelId}/materials/{materialId}/texture-categories/{textureCategoryId}/textures/{textureId}', [TextureController::class, 'addExistingTextureToCategory']);
+Route::middleware('auth:sanctum')->get('/textures', [TextureController::class, 'getAllTextures']);
 
 
 

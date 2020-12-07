@@ -60,12 +60,24 @@
                     <div class="modal-content w-auto">
                         <div class="modal-body d-inline-flex justify-content-between">
                             <button class="btn btn-secondary mr-2" type="button" data-dismiss="modal" v-on:click="handleNewTextureClick()">Upload new texture</button>
-                            <button class="btn btn-secondary ml-2" type="button">Choose existing texture</button>
+                            <button class="btn btn-secondary ml-2" type="button" data-dismiss="modal" v-on:click="handleExistingTexturesClick()">Choose existing texture</button>
                         </div>
                     </div>
                 </div>
             </div>
             <CreateTextureModal @newTexture="newTexture" v-bind:model-id="model.id" v-bind:material-id="focusedMaterialId" v-bind:texture-category-id="focusedTextureCategoryId"></CreateTextureModal>
+            <div class="modal fade" id="textureListModal" tabindex="-1" aria-hidden="true">
+                <div class="modal-dialog modal-lg" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="font-weight-bold modal-title">Textures</h5>
+                        </div>
+                        <div class="modal-body">
+                            <TextureList @textureClicked="textureClicked" v-bind:textures="filteredExistingTextures"></TextureList>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </template>
@@ -74,10 +86,11 @@
 import ModelRenderer from "../components/ModelRenderer";
 import CreateTextureModal from "../components/CreateTextureModal";
 import Material from "../components/Material";
+import TextureList from "../components/TextureList";
 
 export default {
         name: "View3dModel",
-        components: {ModelRenderer, CreateTextureModal, Material},
+        components: {ModelRenderer, CreateTextureModal, Material, TextureList},
         props: {
             model: {
                 type: Object,
@@ -98,6 +111,7 @@ export default {
                 newTextureCategoryName: '',
                 focusedMaterialId: null,
                 focusedTextureCategoryId: null,
+                existingTextures: [],
                 meshMaterials: [{"id":15,"product_3d_model_id":10,"material_name":"Detail_FRONT_3812","display_name":"Detail_FRONT_3812","texture_setting_wrap_s":"RepeatWrapping","texture_setting_wrap_t":"RepeatWrapping","texture_setting_repeat_u":"1.00","texture_setting_repeat_v":"1.00","created_at":"2020-11-24T10:35:33.000000Z","updated_at":"2020-11-24T10:35:33.000000Z","texture_categories":[]},
                     {
                         "id":16,
@@ -140,6 +154,7 @@ export default {
         mounted() {
             const self = this;
             self.getModelMeshMaterialData();
+            self.getExistingTextures()
             $('.modal').on('shown.bs.modal', () => {
                 self.$root.isModalOpen = true;
             }).on('hidden.bs.modal', () => {
@@ -147,6 +162,15 @@ export default {
             })
         },
         computed: {
+            filteredExistingTextures(){
+                const self = this;
+                if (self.focusedMaterialId !== null && self.focusedTextureCategoryId !== null){
+
+                    const alreadyAddedTextures = self.meshMaterials.find(material => material.id === self.focusedMaterialId).texture_categories.map(o => o.textures).flat()
+                    return this.existingTextures.filter(texture => alreadyAddedTextures.every(alreadyAddedTexture => alreadyAddedTexture.id !== texture.id));
+                }
+                return this.existingTextures;
+            },
             getMaterialsWithOneTexture(){
                 return this.meshMaterials.filter((material) => {
                     let numOfTextures = 0;
@@ -190,14 +214,26 @@ export default {
         },
         methods: {
             //<editor-fold desc="Get">
-            getModelMeshMaterialData(){
+            async getModelMeshMaterialData(){
                 const self = this;
-                axios.get('/models/' + self.model.id + '/materials').then((res) => {
+                await axios.get('/models/' + self.model.id + '/materials').then((res) => {
                     if (res.status === 200){
                         self.meshMaterials = res.data;
                     }
                 }).catch((err) => {
                     console.log(err)
+                })
+            },
+
+            async getExistingTextures(){
+                const self = this;
+                await axios.get('/textures')
+                    .then((res) => {
+                        if (res.status === 200 && res.data['textures']){
+                            self.existingTextures = res.data['textures'];
+                        }
+                    }).catch((err) => {
+                    console.log('SERVER ERROR')
                 })
             },
             //</editor-fold>
@@ -217,6 +253,20 @@ export default {
                     }).catch((err) => {
                         console.log('FAILURE');
                 });
+            },
+
+            addExistingTexture(texture){
+                const self = this;
+                axios.post('/models/' + self.model.id + '/materials/' + self.focusedMaterialId + '/texture-categories/' + self.focusedTextureCategoryId + '/textures/' + texture.id,)
+                    .then((res) => {
+                        $("#textureListModal").modal('hide');
+                        if (res.status === 200){
+                            self.newTexture(self.focusedMaterialId, self.focusedTextureCategoryId, texture)
+                        }
+
+                    }).catch((err) => {
+                    console.log('SERVER ERROR')
+                })
             },
             //</editor-fold>
 
@@ -240,11 +290,19 @@ export default {
             focusedTextureCategoryChanged(textureCategoryId){
                 this.focusedTextureCategoryId = textureCategoryId;
             },
+
+            textureClicked(texture){
+                this.addExistingTexture(texture)
+            },
             //</editor-fold>
 
             //<editor-fold desc="Click handlers">
             handleNewTextureClick(){
                 $("#createTextureModal").modal()
+            },
+
+            handleExistingTexturesClick(){
+                $("#textureListModal").modal();
             }
             //</editor-fold>
         }
