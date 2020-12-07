@@ -38,7 +38,7 @@ const routes = [
     { path: '/login', component: Login, name: 'login', meta: {allowAnonymous: true} },
     { path: '/register', component: Register, name: 'register',  meta: {allowAnonymous: true} },
     { path: '/create-3d-model', component: Create3dModel, name: 'create-3d-model'},
-    { path: '/list-3d-models', component: List3dModels, name: 'list-3d-models'},
+    { path: '/models', component: List3dModels, name: 'models'},
     { path: '/view-3d-model/', props: true, component: View3dModel, name: 'view-3d-model'},
 ]
 

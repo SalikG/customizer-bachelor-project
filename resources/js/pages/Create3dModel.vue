@@ -73,7 +73,7 @@
                         <router-link :to="{name: 'create-3d-model', query: { reloadId: reloadId}}">
                             <button type="button" class="btn btn-primary" data-dismiss="modal">Add another 3d model</button>
                         </router-link>
-                        <router-link :to="{name: 'list-3d-models'}">
+                        <router-link :to="{name: 'models'}">
                             <button type="button" class="btn btn-primary" data-dismiss="modal">Go to overview</button>
                         </router-link>
                     </div>

@@ -31,6 +31,7 @@ Route::post('/auth/logout', [UserController::class, 'logout']);
 // 3d Model
 Route::middleware('auth:sanctum')->get('/models', [Product3dModelController::class, 'get3dModels']);
 Route::middleware('auth:sanctum')->post('/models/{modelId}', [Product3dModelController::class, 'updateModel']);
+Route::middleware('auth:sanctum')->delete('/models/{modelId}', [Product3dModelController::class, 'deleteModel']);
 
 // Mesh Material
 Route::middleware('auth:sanctum')->get('/models/{modelId}/materials', [MeshMaterialController::class, 'getMeshMaterials']);

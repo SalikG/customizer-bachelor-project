@@ -28,4 +28,12 @@ class Product3dModelController extends Controller
 
         return response(['message' => 'SERVER ERROR'], 500);
     }
+
+    public function deleteModel(Request $request, $modelId){
+        $success = Product3dModel::destroy($modelId);
+        if ($success){
+            return response(['message' => 'success'], 200);
+        }
+        return response(['message' => 'SERVER ERROR'], 500);
+    }
 }

@@ -6,6 +6,7 @@
                 <div class="model-display-img-overlay"><i class="fas fa-edit d-none"></i></div>
             </div>
             <input type="text" class="model-name" v-on:keyup.enter="$event.target.blur()" v-on:blur="updateModelName" v-model="model.name"/>
+            <button type="button" class="btn btn-outline-danger ml-auto" v-on:click="deleteModel()">Delete</button>
         </div>
         <div class="row">
             <div id="leftPanel" class="col">
@@ -165,7 +166,6 @@ export default {
             filteredExistingTextures(){
                 const self = this;
                 if (self.focusedMaterialId !== null && self.focusedTextureCategoryId !== null){
-
                     const alreadyAddedTextures = self.meshMaterials.find(material => material.id === self.focusedMaterialId).texture_categories.map(o => o.textures).flat()
                     return this.existingTextures.filter(texture => alreadyAddedTextures.every(alreadyAddedTexture => alreadyAddedTexture.id !== texture.id));
                 }
@@ -266,6 +266,20 @@ export default {
 
                     }).catch((err) => {
                     console.log('SERVER ERROR')
+                })
+            },
+            //</editor-fold>
+
+            //<editor-fold desc="Delete">
+            async deleteModel(){
+                const self = this;
+                await axios.delete('/models/' + self.model.id)
+                    .then((res) => {
+                        if (res.status === 200){
+                            self.$router.replace('/models');
+                        }
+                    }).catch((err) => {
+                    console.log('SERVER ERROR');
                 })
             },
             //</editor-fold>
