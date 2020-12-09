@@ -57,7 +57,7 @@ export default {
             form.append('password', this.LoginData.password);
             let res = await this.signIn(form)
             if (res === false){this.serverResponseErrors.push('Wrong credentials'); return}
-            await this.$router.push('list-3d-models')
+            await this.$router.push('models')
         }
     }
 }

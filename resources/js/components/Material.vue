@@ -50,7 +50,7 @@
                                v-model="textureCategory.name">
                     </div>
                     <div class="textures-container row">
-                        <div class="texture col-4 col-sm-4 col-md-2 col-lg-2" v-for="texture in textureCategory.textures" v-on:click="$emit('applyTextureToModel', material.material_name, texture)">
+                        <div class="texture col-4 col-sm-4 col-md-2 col-lg-2" v-for="texture in textureCategory.textures" v-on:click="$emit('applyTextureToModel', material, texture)">
                             <img v-bind:src="texture.icon_path" alt="icon not found">
                             <p>{{texture.name}}</p>
                         </div>
@@ -130,6 +130,7 @@ export default {
                 return (1+(1-textureScaling))
             },
             set(newScaling){
+                this.$emit('textureScalingChanged', this.material.material_name, (1+(1-newScaling)));
                 this.material.texture_setting_repeat_u = (1+(1-newScaling));
                 this.material.texture_setting_repeat_v = (1+(1-newScaling));
             }
@@ -191,9 +192,8 @@ export default {
                 console.log('FAILURE')
             })
         },
-
-
         //</editor-fold>
+
 
         //<editor-fold desc="Click handlers">
         handleMaterialHeaderClick(){
