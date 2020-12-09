@@ -33,12 +33,12 @@
             textureToApplyByMaterialName: {
                 type: Object,
                 required: false,
-                default: {},
+                default: function(){return {}},
             },
             textureScalingToApplyByMaterialName: {
                 type: Object,
                 required: false,
-                default: {},
+                default:  function(){return {}},
             }
         },
         data(){
@@ -142,22 +142,12 @@
                             for (const [key, material] of Object.entries(node.material)) {
                                 if (material.name === materialName && material.map){
                                     material.map.repeat.set(value, value);
-                                    // material.map.needsUpdate = true;
-                                    //
-                                    // material.needsUpdate = true;
-                                    console.log(value)
-
                                 }
                             }
                         }
                         else {
                             if (node.material.name === materialName && node.material.map){
                                 node.material.map.repeat.set(value, value);
-                                console.log(value)
-
-                                // node.material.map.needsUpdate = true;
-                                //
-                                // node.material.needsUpdate = true;
                             }
                         }
                     }
