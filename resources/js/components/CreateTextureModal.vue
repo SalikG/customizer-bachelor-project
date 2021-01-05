@@ -77,6 +77,8 @@ export default {
                     if (res.status === 200){
                         self.$emit('newTexture', self.materialId, self.textureCategoryId, JSON.parse(res.data.data));
                         $('#createTextureModal').modal('hide');
+                        self.FormData.name = '';
+                        self.FormData.description = '';
                     }
                 }).catch((err) => {
                     console.log(err);
