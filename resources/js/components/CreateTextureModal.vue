@@ -75,9 +75,10 @@ export default {
             axios.post('models/' + self.modelId + '/materials/' + self.materialId + '/texture-categories/' + self.textureCategoryId + '/textures', formData)
                 .then((res) => {
                     if (res.status === 200){
-                        console.log('EMITTER: ' + 'materialId ' + self.materialId, 'textureCategoryId ' + self.textureCategoryId, 'texture ' + JSON.parse(res.data.data))
                         self.$emit('newTexture', self.materialId, self.textureCategoryId, JSON.parse(res.data.data));
                         $('#createTextureModal').modal('hide');
+                        self.FormData.name = '';
+                        self.FormData.description = '';
                     }
                 }).catch((err) => {
                     console.log(err);

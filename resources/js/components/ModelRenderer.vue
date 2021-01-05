@@ -29,6 +29,16 @@
             background: {
                 type: Number,
                 required: true
+            },
+            textureToApplyByMaterialName: {
+                type: Object,
+                required: false,
+                default: function(){return {}},
+            },
+            textureScalingToApplyByMaterialName: {
+                type: Object,
+                required: false,
+                default:  function(){return {}},
             }
         },
         data(){
@@ -46,6 +56,7 @@
                 maxHeight: 0,
                 baseColor: new THREE.Color(0x333333),
                 highlightColor: new THREE.Color(0x0077ff),
+                materials: [],
             }
         },
         mounted: function (){
@@ -55,12 +66,23 @@
             }
             this.animate();
         },
+        destroyed() {
+            window.removeEventListener('resize',  this.handleResize)
+        },
         watch: {
             modelPath: function (newPath, oldPath){
-                console.log(oldPath)
-                console.log(newPath)
                 this.update3dModel(newPath);
-            }
+            },
+            textureToApplyByMaterialName: function(newValue, oldValue){
+                for (const [materialName, value] of Object.entries(newValue)) {
+                    this.applyTexture(materialName, value);
+                }
+            },
+            textureScalingToApplyByMaterialName: function (newValue, oldValue){
+                for (const [materialName, value] of Object.entries(newValue)){
+                    this.applyTextureScaling(materialName, value);
+                }
+            },
         },
         computed: {
             isLoading3dModel(){
@@ -70,10 +92,68 @@
                 return [this.isUploading3dModel, this.isLoading3dModel].some(bool => bool === true);
             }
         },
-        destroyed() {
-            window.removeEventListener('resize',  this.handleResize)
-        },
         methods: {
+            applyTexture(materialName, value){
+                let model = this.scene.getObjectByName("model")
+                let textureLoader = new THREE.TextureLoader();
+                let loadedTexture = textureLoader.load(value['texture'].file_path, function ( texture ) {
+                        texture.wrapS = THREE.RepeatWrapping;
+                        texture.wrapT = THREE.RepeatWrapping;
+                        texture.repeat.set(value['material'].texture_setting_repeat_u, value['material'].texture_setting_repeat_u);
+                    },
+                    // onProgress callback currently not supported
+                    undefined,
+                    // onError callback
+                    function ( err ) {
+                        console.error( err );
+                    });
+
+                // For any meshes in the model, add our texture to specific material by name.
+                model.traverse( function ( node ) {
+                    if ( node.isMesh ) {
+                        //material can be array of materials or one object there for 2 different ways to apply texture
+                        if (Array.isArray(node.material)){
+                            for (const [key, material] of Object.entries(node.material)) {
+                                if (material.name === materialName){
+                                    material.color = new THREE.Color(0xffffff);
+                                    material.map = loadedTexture
+                                    material.needsUpdate = true;
+                                }
+                            }
+                        }
+                        else {
+                            if (node.material.name === materialName){
+                                node.material.color = new THREE.Color(0xffffff);
+                                node.material.map = texture
+                                node.material.needsUpdate = true;
+                            }
+                        }
+                    }
+                })
+            },
+
+            applyTextureScaling(materialName, value){
+                let model = this.scene.getObjectByName("model")
+                // For any meshes in the model, change wrapping on specific material by name if map/texture is applied.
+                model.traverse( function ( node ) {
+                    if ( node.isMesh ) {
+                        //material can be array of materials or one object there for 2 different ways to apply texture
+                        if (Array.isArray(node.material)){
+                            for (const [key, material] of Object.entries(node.material)) {
+                                if (material.name === materialName && material.map){
+                                    material.map.repeat.set(value, value);
+                                }
+                            }
+                        }
+                        else {
+                            if (node.material.name === materialName && node.material.map){
+                                node.material.map.repeat.set(value, value);
+                            }
+                        }
+                    }
+                })
+            },
+
             init(){
                 this.maxWidth = document.getElementById(this.canvasContainerUniqueId).clientWidth;
                 this.maxHeight = this.maxWidth - 100;
@@ -126,6 +206,7 @@
                                 }
                             }
                         });
+                        object.name = "model"
                         self.scene.add( object );
                         self.setLighting(object);
                         self.$emit('rendered-new-3d-model', object);

@@ -1,7 +1,7 @@
 <template>
 
     <div id="textureList" class="row">
-        <div class="texture-container col-3 col-sm-3 col-md-2 col-lg-2" v-for="texture in textures" v-on:click="$emit('textureClicked', texture)">
+        <div class="texture-container col-3 col-sm-3 col-md-2 col-lg-2" v-for="texture in textures" v-on:click="$emit('addExistingTextureClicked', texture)">
             <img v-bind:src="texture.icon_path" alt="icon not found">
             <p>{{texture.name}}</p>
         </div>
