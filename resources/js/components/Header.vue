@@ -14,7 +14,17 @@
         <ul class="navbar-nav ml-auto mr-3">
             <li class="nav-item float-right" v-if="!authenticated"><router-link class="nav-link" to="/register">Register</router-link></li>
             <li class="nav-item float-right" v-if="!authenticated"><router-link class="nav-link" to="/login">Login</router-link></li>
-            <li class="nav-item float-right" v-if="authenticated"><a class="nav-link" id="logout-link" href="#" @click.prevent="signOut">Logout</a></li>
+            <li class="nav-item dropdown" v-if="authenticated">
+                <a class="nav-link" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <i class="fas fa-user fa-lg"></i>
+                </a>
+                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                    <a class="dropdown-item" href="#">Profile</a>
+                    <a class="dropdown-item" href="#">User management</a>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item" id="logout-link" href="#" @click.prevent="signOut">Logout</a>
+                </div>
+            </li>
         </ul>
     </div>
 </nav>

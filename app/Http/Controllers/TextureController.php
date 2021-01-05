@@ -36,7 +36,6 @@ class TextureController extends Controller
 
             return response(['message' => 'success', 'data' => $result], 200);
         }
-
         return response(['message' => 'SERVER ERROR possibly file not found'], 500);
     }
 

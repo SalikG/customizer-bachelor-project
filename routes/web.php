@@ -46,8 +46,6 @@ Route::middleware('auth:sanctum')->post('/models/{modelId}/materials/{materialId
 Route::middleware('auth:sanctum')->post('/models/{modelId}/materials/{materialId}/texture-categories/{textureCategoryId}/textures/{textureId}', [TextureController::class, 'addExistingTextureToCategory']);
 Route::middleware('auth:sanctum')->get('/textures', [TextureController::class, 'getAllTextures']);
 
-
-
 // FILE HANDLING
 Route::middleware('auth:sanctum')->post('/file-upload/temporary-3d-model-single-file', [FileUploadController::class, 'temporary3dModelSingeFile']);
 Route::middleware('auth:sanctum')->post('/file-upload/save-3d-model-single-file', [FileUploadController::class, 'save3dModelFromTemp']);
