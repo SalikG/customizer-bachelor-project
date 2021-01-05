@@ -26,8 +26,10 @@ export default {
         return {
             serverResponseErrors: [],
             LoginData: {
-                email: 'test@test.dk',
-                password: '1234Qwer'
+                // email: 'test@test.dk',
+                // password: '1234Qwer',
+                email: '',
+                password: '',
             }
         }
     },

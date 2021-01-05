@@ -46,11 +46,16 @@ export default {
             serverResponseErrors: [],
             errors: {},
             RegisterData: {
-                companyName: 'TestCompany',
-                firstname: 'TestFirstname',
-                lastname: 'TestLastname',
-                email: 'test@test.dk',
-                password: '1234Qwer',
+                // companyName: 'TestCompany',
+                // firstname: 'TestFirstname',
+                // lastname: 'TestLastname',
+                // email: 'test@test.dk',
+                // password: '1234Qwer',
+                companyName: '',
+                firstname: '',
+                lastname: '',
+                email: '',
+                password: '',
             }
         }
     },

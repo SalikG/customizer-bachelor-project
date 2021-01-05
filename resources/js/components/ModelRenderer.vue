@@ -242,34 +242,34 @@
             },
 
             setLighting(object){
-                let spotLight1 = new THREE.SpotLight(0xFFFFFF, 1, 700)
-                let spotLight2 = new THREE.SpotLight(0xFFFFFF, 1, 700)
-                let spotLight3 = new THREE.SpotLight(0xFFFFFF, 1, 700)
-                let spotLight4 = new THREE.SpotLight(0xFFFFFF, 1, 700)
+                let spotLight1 = new THREE.SpotLight(0xFFFFFF, 1, 900)
+                let spotLight2 = new THREE.SpotLight(0xFFFFFF, 1, 900)
+                let spotLight3 = new THREE.SpotLight(0xFFFFFF, 1, 900)
+                let spotLight4 = new THREE.SpotLight(0xFFFFFF, 1, 900)
 
                 spotLight1.position.set( 0, 200, 300 );
                 spotLight1.target = object;
                 this.scene.add(spotLight1);
                 // let pointLightHelper1 = new THREE.SpotLightHelper( spotLight1 );
-                // scene.add( pointLightHelper1 );
+                // this.scene.add( pointLightHelper1 );
 
                 spotLight2.position.set( 0, 200, -300 );
                 spotLight2.target = object;
                 this.scene.add(spotLight2);
                 // let pointLightHelper2 = new THREE.SpotLightHelper( spotLight2 );
-                // scene.add( pointLightHelper2 );
+                // this.scene.add( pointLightHelper2 );
 
                 spotLight3.position.set( 300, 200, 0 );
                 spotLight3.target = object;
                 this.scene.add(spotLight3);
                 // let pointLightHelper3 = new THREE.SpotLightHelper( spotLight3 );
-                // scene.add( pointLightHelper3 );
+                // this.scene.add( pointLightHelper3 );
 
                 spotLight4.position.set( -300, 200, 0 );
                 spotLight4.target = object;
                 this.scene.add(spotLight4);
                 // let pointLightHelper4 = new THREE.SpotLightHelper( spotLight4 );
-                // scene.add( pointLightHelper4 );
+                // this.scene.add( pointLightHelper4 );
 
                 //light on all objects
                 const ambientLight = new THREE.AmbientLight( 0xFFFFFF, 1.5 ); // soft white light
