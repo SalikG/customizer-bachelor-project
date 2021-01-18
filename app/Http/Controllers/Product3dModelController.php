@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\UpdateModel;
 use App\Models\Product3dModel;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class Product3dModelController extends Controller
 {
@@ -30,8 +31,12 @@ class Product3dModelController extends Controller
     }
 
     public function deleteModel(Request $request, $modelId){
+        $product3DModel = Product3dModel::find($modelId);
+        $companyUUID = $request->user()->company()->first()->uuid;
         $success = Product3dModel::destroy($modelId);
         if ($success){
+            Storage::delete(str_replace('storage/', 'public/', $product3DModel->file_path));
+            Storage::delete(str_replace('storage/', 'public/', $product3DModel->display_img_path));
             return response(['message' => 'success'], 200);
         }
         return response(['message' => 'SERVER ERROR'], 500);
